@@ -36,6 +36,22 @@ npm --workspace @stickerboard/api run migrate     # apply migrations to the main
 | `npm run test:e2e` | Playwright browser flows |
 | `npm run lint` / `npm run typecheck` | static checks |
 
+## Real-device / LAN testing
+
+Run the app on phones/tablets on the same Wi-Fi (great for collaboration tests —
+every device shares the same live map).
+
+1. Start the API: `npm --workspace @stickerboard/api run start` (listens on :3000).
+2. Start the web dev server: `npm --workspace @stickerboard/web run dev`.
+   Vite is exposed on the LAN and prints a **Network** URL, e.g.
+   `http://192.168.1.2:5173/`.
+3. On any device on the same Wi-Fi, open that Network URL.
+
+Devices only talk to Vite (:5173); it **proxies `/api` to the local API**, so
+there's no machine IP to hardcode and no CORS. If a device can't connect, allow
+**Node.js** through the OS firewall for **Private** networks (Windows may prompt
+the first time Vite binds).
+
 ## Layout (monorepo, npm workspaces)
 
 ```
