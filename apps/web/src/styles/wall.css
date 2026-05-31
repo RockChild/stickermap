@@ -1,0 +1,205 @@
+.wall {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.wall__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex-wrap: wrap;
+}
+.wall__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+}
+.wall__policy {
+  font-size: 12px;
+  color: var(--muted);
+}
+.wall__quota {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.wall__spacer {
+  flex: 1;
+}
+.wall__msg {
+  padding: 8px 14px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--ink);
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+}
+.wall__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.wall__canvas {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  cursor: crosshair;
+  background-color: var(--bg-2);
+  background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+.wall__hint {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* ---- Wall sticker (reuses the design-book sticker language) ---- */
+.wall-sticker {
+  position: absolute;
+  width: 150px;
+  min-height: 116px;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  padding: 20px 14px 12px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sticker);
+  color: #2a2616;
+  font-family: var(--font-hand);
+  transition:
+    transform 0.2s var(--ease-bounce),
+    box-shadow 0.2s;
+}
+:root[data-theme="confetti"] .wall-sticker {
+  border-radius: 14px;
+}
+:root[data-theme="midnight"] .wall-sticker {
+  color: var(--ink);
+}
+.wall-sticker:hover {
+  transform: translate(-50%, -54%) rotate(0deg) scale(1.05);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+.wall-sticker--help {
+  background: var(--cat-help);
+}
+.wall-sticker--meet {
+  background: var(--cat-meet);
+}
+.wall-sticker--whatif {
+  background: var(--cat-whatif);
+}
+.wall-sticker--cry {
+  background: var(--cat-cry);
+}
+.wall-sticker--drop {
+  animation: wallDrop 0.6s var(--ease-bounce);
+}
+@keyframes wallDrop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -120%) rotate(-12deg) scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -46%) rotate(3deg) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  }
+}
+.wall-sticker__text {
+  font-size: 18px;
+  line-height: 1.3;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.wall-sticker__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 10px;
+}
+.wall-sticker__author {
+  font-family: var(--font-body);
+  font-size: 11px;
+  opacity: 0.7;
+}
+.react-btn--mini {
+  padding: 3px 9px;
+  font-size: 12px;
+  font-family: var(--font-body);
+}
+.wall-pin-badge {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  font-size: 16px;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+}
+.wall-sticker__ctrls {
+  position: absolute;
+  top: -12px;
+  left: -10px;
+  display: none;
+  gap: 4px;
+}
+.wall-sticker:hover .wall-sticker__ctrls {
+  display: flex;
+}
+.wall-sticker__ctrls button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 12px;
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+}
+
+/* ---- Confetti ---- */
+.confetti-piece {
+  position: fixed;
+  z-index: 50;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+.confetti-piece.go {
+  animation: confPop 0.9s var(--ease-soft) forwards;
+}
+@keyframes confPop {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(320deg);
+  }
+}

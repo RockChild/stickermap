@@ -6,6 +6,7 @@ import { App } from "./App.js";
 import "./styles/themes.css";
 import "./styles/app.css";
 import "./styles/map.css";
+import "./styles/wall.css";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("#root not found");
