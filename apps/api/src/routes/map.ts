@@ -9,8 +9,10 @@ import {
 } from "../map/service.js";
 
 const VISIBILITIES: Visibility[] = ["public", "private", "unlisted"];
-// Allowed free TTLs (seconds): 1h, 24h, 7d. null = permanent (premium).
-const ALLOWED_TTLS = new Set([3600, 86400, 604800]);
+// Free single-note TTLs (seconds): 1h, 12h, 24h. Free hard cap = 1 day.
+// Premium (up to 1 year) and permanent are gated until billing exists.
+// See 10_reactions_lifetimes_clustering.md for the full tier policy.
+const ALLOWED_TTLS = new Set([3600, 43200, 86400]);
 
 function handleError(error: unknown, reply: FastifyReply) {
   if (error instanceof MapError) {

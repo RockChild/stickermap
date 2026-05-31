@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { createNote } from "../api/client.js";
 
+// Free single-note ETAs, capped at 1 day (see lifetime tiers in docs).
 const TTLS = [
   { label: "1 hour", seconds: 3600 },
+  { label: "12 hours", seconds: 43200 },
   { label: "24 hours", seconds: 86400 },
-  { label: "7 days", seconds: 604800 },
 ];
 
 interface Props {

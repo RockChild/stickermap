@@ -168,3 +168,19 @@
   gap: 10px;
   margin-top: 2px;
 }
+
+/* ---- Per-theme map tinting ----
+   Quick approximation: a CSS filter on the map tiles only (not markers, which
+   are separate DOM). The "real" fix later is a custom MapLibre style per theme. */
+.maplibregl-canvas {
+  transition: filter 0.35s var(--ease-soft);
+}
+:root[data-theme="atelier"] .maplibregl-canvas {
+  filter: sepia(0.12) saturate(0.82) brightness(1.02);
+}
+:root[data-theme="confetti"] .maplibregl-canvas {
+  filter: saturate(1.2) hue-rotate(-8deg) brightness(1.03);
+}
+:root[data-theme="midnight"] .maplibregl-canvas {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.95);
+}
