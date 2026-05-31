@@ -10,112 +10,376 @@
         --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
       }
       body[data-theme="atelier"] {
-        --bg: #f4f2ec; --bg-2: #eae4d8; --surface: #fff; --ink: #1d1b17;
-        --muted: #6c675d; --line: #e2ddd2; --accent: #2f5d50; --accent-ink: #fff;
-        --radius: 8px; --radius-lg: 14px;
-        --shadow: 0 1px 2px rgba(29,27,23,.06), 0 8px 24px rgba(29,27,23,.08);
-        --shadow-sticker: 0 10px 20px rgba(29,27,23,.14);
+        --bg: #f4f2ec;
+        --bg-2: #eae4d8;
+        --surface: #fff;
+        --ink: #1d1b17;
+        --muted: #6c675d;
+        --line: #e2ddd2;
+        --accent: #2f5d50;
+        --accent-ink: #fff;
+        --radius: 8px;
+        --radius-lg: 14px;
+        --shadow:
+          0 1px 2px rgba(29, 27, 23, 0.06), 0 8px 24px rgba(29, 27, 23, 0.08);
+        --shadow-sticker: 0 10px 20px rgba(29, 27, 23, 0.14);
         --font-head: "Iowan Old Style", Georgia, serif;
         --font-body: "Inter", system-ui, sans-serif;
         --font-hand: "Bradley Hand", "Segoe Print", cursive;
-        --cat-help: #e6b3a3; --cat-meet: #cfe0c8; --cat-whatif: #f0dca8; --cat-cry: #b9cdde;
+        --cat-help: #e6b3a3;
+        --cat-meet: #cfe0c8;
+        --cat-whatif: #f0dca8;
+        --cat-cry: #b9cdde;
       }
       body[data-theme="confetti"] {
-        --bg: #fff6fb; --bg-2: #ffe9f4; --surface: #fff; --ink: #3a2e4d;
-        --muted: #9a8fb0; --line: #ffe0ef; --accent: #ff5da2; --accent-ink: #fff;
-        --radius: 16px; --radius-lg: 24px;
-        --shadow: 0 6px 0 rgba(255,93,162,.12), 0 12px 28px rgba(124,58,120,.12);
-        --shadow-sticker: 0 12px 22px rgba(124,58,120,.2);
+        --bg: #fff6fb;
+        --bg-2: #ffe9f4;
+        --surface: #fff;
+        --ink: #3a2e4d;
+        --muted: #9a8fb0;
+        --line: #ffe0ef;
+        --accent: #ff5da2;
+        --accent-ink: #fff;
+        --radius: 16px;
+        --radius-lg: 24px;
+        --shadow:
+          0 6px 0 rgba(255, 93, 162, 0.12), 0 12px 28px rgba(124, 58, 120, 0.12);
+        --shadow-sticker: 0 12px 22px rgba(124, 58, 120, 0.2);
         --font-head: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
         --font-body: "Nunito", "Trebuchet MS", system-ui, sans-serif;
         --font-hand: "Segoe Print", "Comic Sans MS", cursive;
-        --cat-help: #ffb3c1; --cat-meet: #b8f2e6; --cat-whatif: #fff1a8; --cat-cry: #bcd3ff;
+        --cat-help: #ffb3c1;
+        --cat-meet: #b8f2e6;
+        --cat-whatif: #fff1a8;
+        --cat-cry: #bcd3ff;
       }
       body[data-theme="midnight"] {
-        --bg: #0d1016; --bg-2: #11151d; --surface: #171c26; --ink: #e9edf4;
-        --muted: #8b95a7; --line: #232b38; --accent: #6ee7ff; --accent-ink: #06222b;
-        --radius: 10px; --radius-lg: 16px;
-        --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 14px 34px rgba(0,0,0,.55);
-        --shadow-sticker: 0 14px 30px rgba(0,0,0,.6);
+        --bg: #0d1016;
+        --bg-2: #11151d;
+        --surface: #171c26;
+        --ink: #e9edf4;
+        --muted: #8b95a7;
+        --line: #232b38;
+        --accent: #6ee7ff;
+        --accent-ink: #06222b;
+        --radius: 10px;
+        --radius-lg: 16px;
+        --shadow:
+          0 1px 0 rgba(255, 255, 255, 0.04) inset,
+          0 14px 34px rgba(0, 0, 0, 0.55);
+        --shadow-sticker: 0 14px 30px rgba(0, 0, 0, 0.6);
         --font-head: "Space Grotesk", system-ui, sans-serif;
         --font-body: "Inter", system-ui, sans-serif;
         --font-hand: "Segoe Print", cursive;
-        --cat-help: #4a2030; --cat-meet: #103436; --cat-whatif: #34301a; --cat-cry: #1a2945;
+        --cat-help: #4a2030;
+        --cat-meet: #103436;
+        --cat-whatif: #34301a;
+        --cat-cry: #1a2945;
       }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; }
+      * {
+        box-sizing: border-box;
+      }
+      html,
       body {
-        background: var(--bg); color: var(--ink); font-family: var(--font-body);
-        -webkit-font-smoothing: antialiased;
-        transition: background .35s var(--ease-soft), color .35s var(--ease-soft);
+        margin: 0;
       }
-      body[data-theme="midnight"] .sticker, body[data-theme="midnight"] .row-sticker { color: var(--ink); }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        transition:
+          background 0.35s var(--ease-soft),
+          color 0.35s var(--ease-soft);
+      }
+      body[data-theme="midnight"] .sticker,
+      body[data-theme="midnight"] .row-sticker {
+        color: var(--ink);
+      }
 
       .top {
-        position: sticky; top: 0; z-index: 10; display: flex; align-items: center;
-        gap: 12px; padding: 12px 18px; flex-wrap: wrap;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+        flex-wrap: wrap;
         background: color-mix(in srgb, var(--bg) 85%, transparent);
-        backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
       }
-      .brand { font-family: var(--font-head); font-weight: 700; font-size: 18px; }
-      .brand .dot { color: var(--accent); }
-      .themes { margin-left: auto; display: flex; gap: 6px; }
-      .themes button { border: 1px solid var(--line); cursor: pointer; font: inherit; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: var(--surface); color: var(--ink); }
-      .themes button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+      .brand {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .brand .dot {
+        color: var(--accent);
+      }
+      .themes {
+        margin-left: auto;
+        display: flex;
+        gap: 6px;
+      }
+      .themes button {
+        border: 1px solid var(--line);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--ink);
+      }
+      .themes button[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border-color: transparent;
+      }
 
-      .wrap { max-width: 1000px; margin: 0 auto; padding: 8px 20px 60px; }
-      .intro { color: var(--muted); margin: 18px 0 8px; }
-      h2 { font-family: var(--font-head); font-size: 24px; margin: 40px 0 4px; }
-      .note { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
-      hr { border: 0; border-top: 1px solid var(--line); margin: 44px 0 0; }
+      .wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 8px 20px 60px;
+      }
+      .intro {
+        color: var(--muted);
+        margin: 18px 0 8px;
+      }
+      h2 {
+        font-family: var(--font-head);
+        font-size: 24px;
+        margin: 40px 0 4px;
+      }
+      .note {
+        color: var(--muted);
+        margin: 0 0 16px;
+        font-size: 14px;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 44px 0 0;
+      }
 
       /* sticker look */
-      .sticker { padding: 18px 14px 12px; border-radius: 4px; box-shadow: var(--shadow-sticker); font-family: var(--font-hand); color: #2a2616; position: relative; }
-      body[data-theme="confetti"] .sticker { border-radius: 14px; }
-      .sticker.help { background: var(--cat-help); }
-      .sticker.meet { background: var(--cat-meet); }
-      .sticker.whatif { background: var(--cat-whatif); }
-      .sticker.cry { background: var(--cat-cry); }
-      .tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 58px; height: 20px; background: color-mix(in srgb, var(--accent) 26%, #fff); opacity: .7; border-radius: 2px; }
-      .s-text { font-size: 17px; line-height: 1.3; }
-      .s-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; font-family: var(--font-body); }
-      .s-author { font-size: 11px; opacity: .7; }
-      .s-react { font-size: 12px; font-weight: 700; background: rgba(255,255,255,.5); border-radius: 999px; padding: 2px 8px; }
-      body[data-theme="midnight"] .s-react { background: rgba(255,255,255,.12); }
-      .pin { position: absolute; top: -10px; right: -6px; font-size: 16px; filter: drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
-      .add { border: 0; cursor: pointer; font: inherit; font-weight: 700; color: var(--accent-ink); background: var(--accent); border-radius: var(--radius); padding: 11px 16px; box-shadow: var(--shadow); }
+      .sticker {
+        padding: 18px 14px 12px;
+        border-radius: 4px;
+        box-shadow: var(--shadow-sticker);
+        font-family: var(--font-hand);
+        color: #2a2616;
+        position: relative;
+      }
+      body[data-theme="confetti"] .sticker {
+        border-radius: 14px;
+      }
+      .sticker.help {
+        background: var(--cat-help);
+      }
+      .sticker.meet {
+        background: var(--cat-meet);
+      }
+      .sticker.whatif {
+        background: var(--cat-whatif);
+      }
+      .sticker.cry {
+        background: var(--cat-cry);
+      }
+      .tape {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-4deg);
+        width: 58px;
+        height: 20px;
+        background: color-mix(in srgb, var(--accent) 26%, #fff);
+        opacity: 0.7;
+        border-radius: 2px;
+      }
+      .s-text {
+        font-size: 17px;
+        line-height: 1.3;
+      }
+      .s-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 10px;
+        font-family: var(--font-body);
+      }
+      .s-author {
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .s-react {
+        font-size: 12px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        padding: 2px 8px;
+      }
+      body[data-theme="midnight"] .s-react {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .pin {
+        position: absolute;
+        top: -10px;
+        right: -6px;
+        font-size: 16px;
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+      }
+      .add {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        color: var(--accent-ink);
+        background: var(--accent);
+        border-radius: var(--radius);
+        padding: 11px 16px;
+        box-shadow: var(--shadow);
+      }
 
       /* A — corkboard */
-      .cork { position: relative; height: 460px; border-radius: var(--radius-lg); border: 1px solid var(--line); overflow: hidden; background-color: var(--bg-2); background-image: radial-gradient(var(--line) 1.4px, transparent 1.4px); background-size: 22px 22px; }
-      .cork .sticker { position: absolute; width: 150px; transition: transform .2s var(--ease-bounce), box-shadow .2s; }
-      .cork .sticker:hover { transform: rotate(0deg) translateY(-6px) scale(1.05) !important; z-index: 5; }
-      .cork .add { position: absolute; right: 16px; bottom: 16px; z-index: 6; }
+      .cork {
+        position: relative;
+        height: 460px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background-color: var(--bg-2);
+        background-image: radial-gradient(var(--line) 1.4px, transparent 1.4px);
+        background-size: 22px 22px;
+      }
+      .cork .sticker {
+        position: absolute;
+        width: 150px;
+        transition:
+          transform 0.2s var(--ease-bounce),
+          box-shadow 0.2s;
+      }
+      .cork .sticker:hover {
+        transform: rotate(0deg) translateY(-6px) scale(1.05) !important;
+        z-index: 5;
+      }
+      .cork .add {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index: 6;
+      }
 
       /* B — grid */
-      .shelf { font-family: var(--font-head); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 4px 0 12px; }
-      .grid { columns: 4 200px; column-gap: 16px; }
-      .grid .sticker { break-inside: avoid; margin: 0 0 16px; width: 100%; transition: transform .15s var(--ease-bounce); }
-      .grid .sticker:hover { transform: translateY(-3px); }
-      .b-top { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+      .shelf {
+        font-family: var(--font-head);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 4px 0 12px;
+      }
+      .grid {
+        columns: 4 200px;
+        column-gap: 16px;
+      }
+      .grid .sticker {
+        break-inside: avoid;
+        margin: 0 0 16px;
+        width: 100%;
+        transition: transform 0.15s var(--ease-bounce);
+      }
+      .grid .sticker:hover {
+        transform: translateY(-3px);
+      }
+      .b-top {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+      }
 
       /* C — stream */
-      .stream { max-width: 560px; display: flex; flex-direction: column; gap: 12px; }
-      .c-compose { display: flex; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 12px 14px; box-shadow: var(--shadow); }
-      .c-compose input { flex: 1; border: 0; background: transparent; font: inherit; color: var(--ink); outline: none; }
-      .row-sticker { display: flex; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--accent); border-radius: var(--radius-lg); padding: 12px 14px; box-shadow: var(--shadow); }
-      .row-sticker.help { border-left-color: var(--cat-help); }
-      .row-sticker.meet { border-left-color: var(--cat-meet); }
-      .row-sticker.whatif { border-left-color: var(--cat-whatif); }
-      .row-sticker.cry { border-left-color: var(--cat-cry); }
-      .row-text { font-family: var(--font-hand); font-size: 18px; }
-      .row-meta { display: flex; gap: 10px; align-items: center; margin-top: 6px; font-size: 12px; color: var(--muted); }
-      .row-react { margin-left: auto; font-weight: 700; }
-      .pill { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+      .stream {
+        max-width: 560px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .c-compose {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+      }
+      .c-compose input {
+        flex: 1;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        color: var(--ink);
+        outline: none;
+      }
+      .row-sticker {
+        display: flex;
+        gap: 12px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 6px solid var(--accent);
+        border-radius: var(--radius-lg);
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+      }
+      .row-sticker.help {
+        border-left-color: var(--cat-help);
+      }
+      .row-sticker.meet {
+        border-left-color: var(--cat-meet);
+      }
+      .row-sticker.whatif {
+        border-left-color: var(--cat-whatif);
+      }
+      .row-sticker.cry {
+        border-left-color: var(--cat-cry);
+      }
+      .row-text {
+        font-family: var(--font-hand);
+        font-size: 18px;
+      }
+      .row-meta {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .row-react {
+        margin-left: auto;
+        font-weight: 700;
+      }
+      .pill {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        color: var(--accent);
+      }
     </style>
   </head>
   <body data-theme="atelier">
     <div class="top">
-      <div class="brand">Sticker<span class="dot">●</span>Board · Wall sketches</div>
+      <div class="brand">
+        Sticker<span class="dot">●</span>Board · Wall sketches
+      </div>
       <div class="themes" role="group" aria-label="Theme">
         <button data-t="atelier" aria-pressed="true">Atelier</button>
         <button data-t="confetti" aria-pressed="false">Confetti</button>
@@ -135,12 +399,72 @@
         personal / tactile (fridge or cork board). Can get messy when full.
       </p>
       <div class="cork">
-        <div class="sticker meet" style="left: 5%; top: 7%; transform: rotate(-3deg)"><span class="tape"></span><span class="pin">📌</span><div class="s-text">Coffee Sat 10am? ☕</div><div class="s-foot"><span class="s-author">@demo_friend</span><span class="s-react">👍 5</span></div></div>
-        <div class="sticker whatif" style="left: 34%; top: 5%; transform: rotate(2deg)"><span class="tape"></span><div class="s-text">what if we did a rooftop movie night 🎬</div><div class="s-foot"><span class="s-author">@sunny_otter</span><span class="s-react">👍 3</span></div></div>
-        <div class="sticker help" style="left: 64%; top: 11%; transform: rotate(-1deg)"><span class="tape"></span><div class="s-text">need a ride to the airport Fri 🙏</div><div class="s-foot"><span class="s-author">@brave_maple</span><span class="s-react">👍 1</span></div></div>
-        <div class="sticker cry" style="left: 14%; top: 50%; transform: rotate(3deg)"><span class="tape"></span><div class="s-text">missing the old café 😢</div><div class="s-foot"><span class="s-author">@mellow_fox</span><span class="s-react">👍 2</span></div></div>
-        <div class="sticker meet" style="left: 44%; top: 55%; transform: rotate(-2deg)"><span class="tape"></span><div class="s-text">board game night?</div><div class="s-foot"><span class="s-author">@keen_robin</span><span class="s-react">👍 4</span></div></div>
-        <div class="sticker whatif" style="left: 72%; top: 52%; transform: rotate(2deg)"><span class="tape"></span><div class="s-text">what if pizza for breakfast 🍕</div><div class="s-foot"><span class="s-author">@jolly_mango</span><span class="s-react">👍 6</span></div></div>
+        <div
+          class="sticker meet"
+          style="left: 5%; top: 7%; transform: rotate(-3deg)"
+        >
+          <span class="tape"></span><span class="pin">📌</span>
+          <div class="s-text">Coffee Sat 10am? ☕</div>
+          <div class="s-foot">
+            <span class="s-author">@demo_friend</span
+            ><span class="s-react">👍 5</span>
+          </div>
+        </div>
+        <div
+          class="sticker whatif"
+          style="left: 34%; top: 5%; transform: rotate(2deg)"
+        >
+          <span class="tape"></span>
+          <div class="s-text">what if we did a rooftop movie night 🎬</div>
+          <div class="s-foot">
+            <span class="s-author">@sunny_otter</span
+            ><span class="s-react">👍 3</span>
+          </div>
+        </div>
+        <div
+          class="sticker help"
+          style="left: 64%; top: 11%; transform: rotate(-1deg)"
+        >
+          <span class="tape"></span>
+          <div class="s-text">need a ride to the airport Fri 🙏</div>
+          <div class="s-foot">
+            <span class="s-author">@brave_maple</span
+            ><span class="s-react">👍 1</span>
+          </div>
+        </div>
+        <div
+          class="sticker cry"
+          style="left: 14%; top: 50%; transform: rotate(3deg)"
+        >
+          <span class="tape"></span>
+          <div class="s-text">missing the old café 😢</div>
+          <div class="s-foot">
+            <span class="s-author">@mellow_fox</span
+            ><span class="s-react">👍 2</span>
+          </div>
+        </div>
+        <div
+          class="sticker meet"
+          style="left: 44%; top: 55%; transform: rotate(-2deg)"
+        >
+          <span class="tape"></span>
+          <div class="s-text">board game night?</div>
+          <div class="s-foot">
+            <span class="s-author">@keen_robin</span
+            ><span class="s-react">👍 4</span>
+          </div>
+        </div>
+        <div
+          class="sticker whatif"
+          style="left: 72%; top: 52%; transform: rotate(2deg)"
+        >
+          <span class="tape"></span>
+          <div class="s-text">what if pizza for breakfast 🍕</div>
+          <div class="s-foot">
+            <span class="s-author">@jolly_mango</span
+            ><span class="s-react">👍 6</span>
+          </div>
+        </div>
         <button class="add">＋ Stick a sticker</button>
       </div>
 
@@ -153,15 +477,51 @@
       <div class="b-top"><button class="add">＋ Stick a sticker</button></div>
       <div class="shelf">📌 Pinned</div>
       <div class="grid" style="columns: 4 220px">
-        <div class="sticker meet"><div class="s-text">Coffee Sat 10am? ☕</div><div class="s-foot"><span class="s-author">@demo_friend</span><span class="s-react">👍 5</span></div></div>
+        <div class="sticker meet">
+          <div class="s-text">Coffee Sat 10am? ☕</div>
+          <div class="s-foot">
+            <span class="s-author">@demo_friend</span
+            ><span class="s-react">👍 5</span>
+          </div>
+        </div>
       </div>
       <div class="shelf">Recent</div>
       <div class="grid">
-        <div class="sticker whatif"><div class="s-text">what if we did a rooftop movie night 🎬</div><div class="s-foot"><span class="s-author">@sunny_otter</span><span class="s-react">👍 3</span></div></div>
-        <div class="sticker help"><div class="s-text">need a ride to the airport Fri 🙏</div><div class="s-foot"><span class="s-author">@brave_maple</span><span class="s-react">👍 1</span></div></div>
-        <div class="sticker cry"><div class="s-text">missing the old café 😢</div><div class="s-foot"><span class="s-author">@mellow_fox</span><span class="s-react">👍 2</span></div></div>
-        <div class="sticker meet"><div class="s-text">board game night?</div><div class="s-foot"><span class="s-author">@keen_robin</span><span class="s-react">👍 4</span></div></div>
-        <div class="sticker whatif"><div class="s-text">what if pizza for breakfast 🍕</div><div class="s-foot"><span class="s-author">@jolly_mango</span><span class="s-react">👍 6</span></div></div>
+        <div class="sticker whatif">
+          <div class="s-text">what if we did a rooftop movie night 🎬</div>
+          <div class="s-foot">
+            <span class="s-author">@sunny_otter</span
+            ><span class="s-react">👍 3</span>
+          </div>
+        </div>
+        <div class="sticker help">
+          <div class="s-text">need a ride to the airport Fri 🙏</div>
+          <div class="s-foot">
+            <span class="s-author">@brave_maple</span
+            ><span class="s-react">👍 1</span>
+          </div>
+        </div>
+        <div class="sticker cry">
+          <div class="s-text">missing the old café 😢</div>
+          <div class="s-foot">
+            <span class="s-author">@mellow_fox</span
+            ><span class="s-react">👍 2</span>
+          </div>
+        </div>
+        <div class="sticker meet">
+          <div class="s-text">board game night?</div>
+          <div class="s-foot">
+            <span class="s-author">@keen_robin</span
+            ><span class="s-react">👍 4</span>
+          </div>
+        </div>
+        <div class="sticker whatif">
+          <div class="s-text">what if pizza for breakfast 🍕</div>
+          <div class="s-foot">
+            <span class="s-author">@jolly_mango</span
+            ><span class="s-react">👍 6</span>
+          </div>
+        </div>
       </div>
 
       <hr />
@@ -172,12 +532,58 @@
         spatial "wall".
       </p>
       <div class="stream">
-        <div class="c-compose"><input placeholder="Stick something on @demo_friend's wall…" /><button class="add">Stick</button></div>
-        <div class="row-sticker meet"><div><div class="row-text">Coffee Sat 10am? ☕</div><div class="row-meta"><span class="pill">📌 pinned</span><span>@demo_friend</span><span>· 2h</span><span class="row-react">👍 5</span></div></div></div>
-        <div class="row-sticker whatif"><div><div class="row-text">what if we did a rooftop movie night 🎬</div><div class="row-meta"><span>@sunny_otter</span><span>· 4h</span><span class="row-react">👍 3</span></div></div></div>
-        <div class="row-sticker help"><div><div class="row-text">need a ride to the airport Fri 🙏</div><div class="row-meta"><span>@brave_maple</span><span>· 6h</span><span class="row-react">👍 1</span></div></div></div>
-        <div class="row-sticker cry"><div><div class="row-text">missing the old café 😢</div><div class="row-meta"><span>@mellow_fox</span><span>· 1d</span><span class="row-react">👍 2</span></div></div></div>
-        <div class="row-sticker meet"><div><div class="row-text">board game night?</div><div class="row-meta"><span>@keen_robin</span><span>· 1d</span><span class="row-react">👍 4</span></div></div></div>
+        <div class="c-compose">
+          <input placeholder="Stick something on @demo_friend's wall…" /><button
+            class="add"
+          >
+            Stick
+          </button>
+        </div>
+        <div class="row-sticker meet">
+          <div>
+            <div class="row-text">Coffee Sat 10am? ☕</div>
+            <div class="row-meta">
+              <span class="pill">📌 pinned</span><span>@demo_friend</span
+              ><span>· 2h</span><span class="row-react">👍 5</span>
+            </div>
+          </div>
+        </div>
+        <div class="row-sticker whatif">
+          <div>
+            <div class="row-text">what if we did a rooftop movie night 🎬</div>
+            <div class="row-meta">
+              <span>@sunny_otter</span><span>· 4h</span
+              ><span class="row-react">👍 3</span>
+            </div>
+          </div>
+        </div>
+        <div class="row-sticker help">
+          <div>
+            <div class="row-text">need a ride to the airport Fri 🙏</div>
+            <div class="row-meta">
+              <span>@brave_maple</span><span>· 6h</span
+              ><span class="row-react">👍 1</span>
+            </div>
+          </div>
+        </div>
+        <div class="row-sticker cry">
+          <div>
+            <div class="row-text">missing the old café 😢</div>
+            <div class="row-meta">
+              <span>@mellow_fox</span><span>· 1d</span
+              ><span class="row-react">👍 2</span>
+            </div>
+          </div>
+        </div>
+        <div class="row-sticker meet">
+          <div>
+            <div class="row-text">board game night?</div>
+            <div class="row-meta">
+              <span>@keen_robin</span><span>· 1d</span
+              ><span class="row-react">👍 4</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
