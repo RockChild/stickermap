@@ -5,8 +5,9 @@ export type LocationType = "city" | "country" | "precise";
 export type Visibility = "public" | "private" | "unlisted";
 export type Role = "owner" | "editor" | "viewer";
 export type StickerType = "note" | "image" | "emoji" | "shape";
-export type BoardKind = "note" | "board";
+export type BoardKind = "note" | "board" | "wall";
 export type NoteCategory = "help" | "meet" | "whatif" | "cry";
+export type WallPostPolicy = "owner_only" | "approved" | "anyone";
 
 export interface Coordinate {
   lat: number;

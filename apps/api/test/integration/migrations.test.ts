@@ -34,6 +34,7 @@ describe("migrations (integration)", () => {
       "007_reactions",
       "008_note_category",
       "009_usernames",
+      "010_walls",
     ]);
   });
 

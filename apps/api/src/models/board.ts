@@ -3,6 +3,7 @@ import type {
   NoteCategory,
   Place,
   Visibility,
+  WallPostPolicy,
 } from "@stickerboard/shared";
 import type { Knex } from "knex";
 
@@ -23,6 +24,7 @@ export interface BoardRow {
   category: NoteCategory | null;
   body: string | null;
   expires_at: Date | string | null;
+  post_policy: WallPostPolicy;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +41,7 @@ export interface InsertBoard {
   body?: string | null;
   expires_at?: Date | string | null;
   is_published?: boolean;
+  post_policy?: WallPostPolicy;
 }
 
 export async function insertBoard(
@@ -58,6 +61,8 @@ export async function insertBoard(
       body: data.body ?? null,
       expires_at: data.expires_at ?? null,
       is_published: data.is_published ?? false,
+      // undefined -> column default ('approved')
+      post_policy: data.post_policy,
     })
     .returning("*");
   return row!;

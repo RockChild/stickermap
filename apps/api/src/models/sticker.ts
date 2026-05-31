@@ -1,5 +1,5 @@
 import type { Knex } from "knex";
-import type { StickerType } from "@stickerboard/shared";
+import type { NoteCategory, StickerType } from "@stickerboard/shared";
 
 export interface StickerStyle {
   color: string;
@@ -16,6 +16,9 @@ export interface StickerRow {
   position: { x: number; y: number };
   style: StickerStyle;
   created_by: string | null;
+  category: NoteCategory | null;
+  pinned: boolean;
+  expires_at: Date | string | null;
   created_at: string;
 }
 
@@ -26,6 +29,8 @@ export interface InsertSticker {
   position: { x: number; y: number };
   style: StickerStyle;
   created_by: string;
+  category?: NoteCategory | null;
+  expires_at?: Date | string | null;
 }
 
 export async function insertSticker(
@@ -40,6 +45,8 @@ export async function insertSticker(
       position: data.position,
       style: data.style,
       created_by: data.created_by,
+      category: data.category ?? null,
+      expires_at: data.expires_at ?? null,
     })
     .returning("*");
   return row!;

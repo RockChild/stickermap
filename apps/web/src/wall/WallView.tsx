@@ -44,6 +44,7 @@ interface Props {
 
 export function WallView({ api, handle, myHandle, onExit, onVisit }: Props) {
   const [wall, setWall] = useState<Wall | null>(null);
+  const [loadError, setLoadError] = useState(false);
   const [pending, setPending] = useState<{ x: number; y: number } | null>(null);
   const [category, setCategory] = useState<NoteCategory | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
@@ -57,9 +58,15 @@ export function WallView({ api, handle, myHandle, onExit, onVisit }: Props) {
     let live = true;
     setWall(null);
     setMsg(null);
-    void api.getWall(handle).then((w) => {
-      if (live) setWall(w);
-    });
+    setLoadError(false);
+    api.getWall(handle).then(
+      (w) => {
+        if (live) setWall(w);
+      },
+      () => {
+        if (live) setLoadError(true);
+      },
+    );
     return () => {
       live = false;
     };
@@ -88,6 +95,20 @@ export function WallView({ api, handle, myHandle, onExit, onVisit }: Props) {
       x: Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)),
       y: Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)),
     });
+  }
+
+  if (loadError) {
+    return (
+      <div className="wall">
+        <div className="wall__bar">
+          <button className="btn btn-ghost btn-sm" onClick={onExit}>
+            ← Map
+          </button>
+          <div className="wall__title">No wall for @{handle}</div>
+        </div>
+        <div className="wall__loading">That handle doesn’t exist.</div>
+      </div>
+    );
   }
 
   if (!wall) {
@@ -180,14 +201,15 @@ export function WallView({ api, handle, myHandle, onExit, onVisit }: Props) {
             My wall
           </button>
         )}
-        {handle !== "demo_friend" && (
-          <button
-            className="btn btn-ghost btn-sm"
-            onClick={() => onVisit("demo_friend")}
-          >
-            @demo_friend
-          </button>
-        )}
+        <button
+          className="btn btn-ghost btn-sm"
+          onClick={() => {
+            const h = window.prompt("Visit which @handle?");
+            if (h) onVisit(h.trim().replace(/^@/, ""));
+          }}
+        >
+          Visit @…
+        </button>
       </div>
 
       {msg && <div className="wall__msg">{msg}</div>}

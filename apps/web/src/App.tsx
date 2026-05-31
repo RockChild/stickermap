@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { AuthBar } from "./auth/AuthBar.js";
 import { useAuth } from "./auth/AuthProvider.js";
 import { MapView } from "./map/MapView.js";
 import { WallView } from "./wall/WallView.js";
-import { createMockWallApi } from "./wall/mockApi.js";
+import { httpWallApi } from "./wall/httpApi.js";
 import { ThemeSwitcher } from "./theme/ThemeSwitcher.js";
 
 type View = { kind: "map" } | { kind: "wall"; handle: string };
@@ -15,9 +15,18 @@ type View = { kind: "map" } | { kind: "wall"; handle: string };
 export function App() {
   const { user } = useAuth();
   const myHandle = user?.username ?? null;
-  // Mock wall backend for now — same interface the real API will implement.
-  const wallApi = useMemo(() => createMockWallApi(myHandle), [myHandle]);
   const [view, setView] = useState<View>({ kind: "map" });
+
+  function openWalls() {
+    if (myHandle) {
+      setView({ kind: "wall", handle: myHandle });
+      return;
+    }
+    const h = window.prompt(
+      "Sign in for your own wall — or visit which @handle?",
+    );
+    if (h) setView({ kind: "wall", handle: h.trim().replace(/^@/, "") });
+  }
 
   return (
     <div className="app">
@@ -27,12 +36,7 @@ export function App() {
             Sticker<span className="dot">●</span>Board
           </div>
           <div className="appbar__actions">
-            <button
-              className="btn btn-ghost btn-sm"
-              onClick={() =>
-                setView({ kind: "wall", handle: myHandle ?? "demo_friend" })
-              }
-            >
+            <button className="btn btn-ghost btn-sm" onClick={openWalls}>
               🧱 Walls
             </button>
             <ThemeSwitcher />
@@ -44,7 +48,7 @@ export function App() {
         <MapView />
         {view.kind === "wall" && (
           <WallView
-            api={wallApi}
+            api={httpWallApi}
             handle={view.handle}
             myHandle={myHandle}
             onExit={() => setView({ kind: "map" })}
