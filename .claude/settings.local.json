@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "Bash(git --version)",
+      "Bash(npm --version)",
+      "Bash(npx vitest *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m '@ *)",
+      "Bash(git config *)"
+    ]
+  }
+}
