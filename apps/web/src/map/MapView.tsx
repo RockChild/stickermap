@@ -18,6 +18,9 @@ const STYLE = "https://tiles.openfreemap.org/styles/positron";
 
 const ALL_CATS: NoteCategory[] = CATEGORIES.map((c) => c.id);
 
+// Neutral world view, used only if we can't locate the user at all.
+const FALLBACK_CENTER: [number, number] = [0, 25];
+
 function expiryLabel(iso: string | null): string {
   return iso ? `Expires ${new Date(iso).toLocaleString()}` : "Permanent";
 }
@@ -40,6 +43,7 @@ export function MapView() {
   const [reactErr, setReactErr] = useState<string | null>(null);
   const [category, setCategory] = useState<NoteCategory | null>(null);
   const [locating, setLocating] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
   const [activeCats, setActiveCats] = useState<Set<NoteCategory>>(
     () => new Set(ALL_CATS),
   );
@@ -159,34 +163,57 @@ export function MapView() {
     }
   }, []);
 
-  // Initialize the map once.
+  // Create the map already centered on the user (no cross-world fly).
+  // IP first for a fast initial center; GPS refines it if the user grants it.
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: STYLE,
-      center: [-73.985, 40.758],
-      zoom: 11,
-    });
-    map.addControl(new maplibregl.NavigationControl({}), "top-left");
-    map.on("load", () => {
-      loadedRef.current = true;
-      renderMarkers();
-      void centerOnUser("ip");
-    });
-    map.on("moveend", renderMarkers);
-    // A click on empty map (not on a marker) starts a new sticker.
-    map.on("click", (e) => {
-      setCategory(null);
-      setPending({ lng: e.lngLat.lng, lat: e.lngLat.lat });
-    });
-    mapRef.current = map;
+    let cancelled = false;
+    let map: maplibregl.Map | null = null;
+
+    void (async () => {
+      const ip = await locateByIp();
+      if (cancelled || !containerRef.current) return;
+
+      map = new maplibregl.Map({
+        container: containerRef.current,
+        style: STYLE,
+        center: ip ? [ip.lng, ip.lat] : FALLBACK_CENTER,
+        zoom: ip ? 12 : 2,
+      });
+      map.addControl(new maplibregl.NavigationControl({}), "top-left");
+      map.on("load", () => {
+        loadedRef.current = true;
+        setMapReady(true);
+        renderMarkers();
+      });
+      map.on("moveend", renderMarkers);
+      // A click on empty map (not on a marker) starts a new sticker.
+      map.on("click", (e) => {
+        setCategory(null);
+        setPending({ lng: e.lngLat.lng, lat: e.lngLat.lat });
+      });
+      mapRef.current = map;
+
+      // Refine to precise GPS if granted — a short move within the same area,
+      // so it stays cheap (no world-crossing fly).
+      void locateByBrowser().then((gps) => {
+        if (!cancelled && gps && mapRef.current) {
+          mapRef.current.easeTo({
+            center: [gps.lng, gps.lat],
+            zoom: 14,
+            duration: 900,
+          });
+        }
+      });
+    })();
+
     return () => {
-      map.remove();
+      cancelled = true;
+      map?.remove();
       mapRef.current = null;
       loadedRef.current = false;
     };
-  }, [renderMarkers, centerOnUser]);
+  }, [renderMarkers]);
 
   // Rebuild the cluster index whenever the (filtered) pin set changes.
   useEffect(() => {
@@ -199,6 +226,15 @@ export function MapView() {
   return (
     <div className="map-screen">
       <div ref={containerRef} className="map-canvas" />
+
+      {!mapReady && (
+        <div className="map-loading">
+          <div className="map-loading__inner">
+            <div className="spinner" />
+            <span>Finding your location…</span>
+          </div>
+        </div>
+      )}
 
       <FilterBar active={activeCats} onToggle={toggleCat} />
 
