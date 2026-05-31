@@ -30,6 +30,7 @@ describe("migrations (integration)", () => {
       "003_boards_stickers",
       "004_map_pins",
       "005_board_share_token",
+      "006_notes_ttl",
     ]);
   });
 

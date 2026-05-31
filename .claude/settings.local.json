@@ -20,7 +20,11 @@
       "Bash(git remote *)",
       "Bash(git fetch *)",
       "Bash(git ls-tree *)",
-      "Bash(npx prettier *)"
+      "Bash(npx prettier *)",
+      "Bash(curl -s \"https://api.github.com/repos/RockChild/stickermap/actions/runs?per_page=1\")",
+      "Bash(start \"\" \"E:\\\\hole\\\\stickerboard-bootstrap\\\\design\\\\design-book\\\\index.html\")",
+      "Bash(npm *)",
+      "Bash(start \"\" \"http://localhost:5173/\")"
     ]
   }
 }

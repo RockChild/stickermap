@@ -59,10 +59,15 @@ function toBoard(row: BoardRow): Board {
     isPublished: row.is_published,
     version: row.version,
     premiumFeatures: row.premium_features,
+    kind: row.kind,
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
   };
   if (row.description !== null) board.description = row.description;
+  if (row.body !== null) board.body = row.body;
+  if (row.expires_at !== null) {
+    board.expiresAt = new Date(row.expires_at).toISOString();
+  }
   // location is already reduced (city/country centroid) before storage.
   if (row.location !== null) board.location = row.location;
   return board;

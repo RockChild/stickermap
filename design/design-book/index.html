@@ -30,12 +30,18 @@
         --sticker-3: #f3d4d0;
         --radius: 8px;
         --radius-lg: 12px;
-        --shadow: 0 1px 2px rgba(29, 27, 23, 0.06), 0 8px 24px rgba(29, 27, 23, 0.08);
+        --shadow:
+          0 1px 2px rgba(29, 27, 23, 0.06), 0 8px 24px rgba(29, 27, 23, 0.08);
         --shadow-sticker: 0 10px 20px rgba(29, 27, 23, 0.12);
         --font-head: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
         --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
         --font-hand: "Bradley Hand", "Segoe Print", cursive;
-        --map-bg: radial-gradient(120% 120% at 20% 10%, #eef1ea 0%, #e3e7dd 55%, #d7ddcf 100%);
+        --map-bg: radial-gradient(
+          120% 120% at 20% 10%,
+          #eef1ea 0%,
+          #e3e7dd 55%,
+          #d7ddcf 100%
+        );
       }
 
       /* ---- CONFETTI: cute / playful / tactile ---- */
@@ -54,12 +60,20 @@
         --sticker-3: #ffc6e0;
         --radius: 16px;
         --radius-lg: 24px;
-        --shadow: 0 6px 0 rgba(255, 93, 162, 0.12), 0 12px 28px rgba(124, 58, 120, 0.12);
+        --shadow:
+          0 6px 0 rgba(255, 93, 162, 0.12), 0 12px 28px rgba(124, 58, 120, 0.12);
         --shadow-sticker: 0 12px 22px rgba(124, 58, 120, 0.18);
-        --font-head: "Baloo 2", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
-        --font-body: "Nunito", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+        --font-head:
+          "Baloo 2", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+        --font-body:
+          "Nunito", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
         --font-hand: "Segoe Print", "Comic Sans MS", cursive;
-        --map-bg: radial-gradient(120% 120% at 80% 0%, #fff0f8 0%, #ffe3f1 50%, #ffd6ec 100%);
+        --map-bg: radial-gradient(
+          120% 120% at 80% 0%,
+          #fff0f8 0%,
+          #ffe3f1 50%,
+          #ffd6ec 100%
+        );
       }
 
       /* ---- MIDNIGHT: premium / dark / focused ---- */
@@ -78,188 +92,683 @@
         --sticker-3: #2a1530;
         --radius: 10px;
         --radius-lg: 16px;
-        --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 14px 34px rgba(0, 0, 0, 0.55);
+        --shadow:
+          0 1px 0 rgba(255, 255, 255, 0.04) inset,
+          0 14px 34px rgba(0, 0, 0, 0.55);
         --shadow-sticker: 0 14px 30px rgba(0, 0, 0, 0.6);
         --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
         --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
         --font-hand: "Segoe Print", cursive;
-        --map-bg: radial-gradient(120% 120% at 30% 0%, #141b27 0%, #0f141d 55%, #0a0e15 100%);
+        --map-bg: radial-gradient(
+          120% 120% at 30% 0%,
+          #141b27 0%,
+          #0f141d 55%,
+          #0a0e15 100%
+        );
       }
 
-      * { box-sizing: border-box; }
-      html, body { margin: 0; }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
       body {
         background: var(--bg);
         color: var(--ink);
         font-family: var(--font-body);
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
-        transition: background 0.35s var(--ease-soft), color 0.35s var(--ease-soft);
+        transition:
+          background 0.35s var(--ease-soft),
+          color 0.35s var(--ease-soft);
       }
 
-      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px 96px; }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 24px 96px;
+      }
 
       /* ---- Sticky top switcher ---- */
       .topbar {
-        position: sticky; top: 0; z-index: 50;
+        position: sticky;
+        top: 0;
+        z-index: 50;
         backdrop-filter: blur(10px);
         background: color-mix(in srgb, var(--bg) 82%, transparent);
         border-bottom: 1px solid var(--line);
       }
       .topbar-inner {
-        max-width: var(--maxw); margin: 0 auto; padding: 14px 24px;
-        display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
       }
-      .brand { font-family: var(--font-head); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
-      .brand .dot { color: var(--accent); }
-      .switcher { margin-left: auto; display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--line); padding: 5px; border-radius: 999px; }
+      .brand {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+      }
+      .brand .dot {
+        color: var(--accent);
+      }
+      .switcher {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        padding: 5px;
+        border-radius: 999px;
+      }
       .switcher button {
-        border: 0; cursor: pointer; font: inherit; font-weight: 600;
-        padding: 8px 16px; border-radius: 999px; color: var(--muted); background: transparent;
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 999px;
+        color: var(--muted);
+        background: transparent;
         transition: all 0.2s var(--ease-soft);
       }
-      .switcher button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+      .switcher button[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
 
       /* ---- Layout helpers ---- */
-      section { margin-top: 56px; }
-      .sec-title { font-family: var(--font-head); font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin: 0 0 18px; }
-      h1.hero { font-family: var(--font-head); font-size: clamp(34px, 5vw, 56px); line-height: 1.04; letter-spacing: -0.02em; margin: 36px 0 10px; }
-      .lede { color: var(--muted); font-size: 18px; max-width: 620px; }
-      .grid { display: grid; gap: 18px; }
-      .cols-3 { grid-template-columns: repeat(3, 1fr); }
-      .cols-2 { grid-template-columns: repeat(2, 1fr); }
-      @media (max-width: 900px) { .cols-3, .cols-2 { grid-template-columns: 1fr; } }
-      .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow); }
-      .card h3 { margin: 0 0 14px; font-family: var(--font-head); font-size: 16px; }
-      .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      section {
+        margin-top: 56px;
+      }
+      .sec-title {
+        font-family: var(--font-head);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        margin: 0 0 18px;
+      }
+      h1.hero {
+        font-family: var(--font-head);
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+        margin: 36px 0 10px;
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 18px;
+        max-width: 620px;
+      }
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+      .cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 900px) {
+        .cols-3,
+        .cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 22px;
+        box-shadow: var(--shadow);
+      }
+      .card h3 {
+        margin: 0 0 14px;
+        font-family: var(--font-head);
+        font-size: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
 
       /* ---- Tokens ---- */
-      .swatches { display: flex; gap: 10px; flex-wrap: wrap; }
-      .sw { width: 56px; height: 56px; border-radius: 12px; border: 1px solid var(--line); position: relative; }
-      .sw span { position: absolute; bottom: -20px; left: 0; font-size: 11px; color: var(--muted); }
-      .type-spec { display: flex; flex-direction: column; gap: 6px; }
-      .type-spec .d { font-family: var(--font-head); font-size: 28px; letter-spacing: -0.01em; }
-      .type-spec .b { font-family: var(--font-body); }
-      .type-spec .h { font-family: var(--font-hand); font-size: 22px; color: var(--accent-2); }
+      .swatches {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .sw {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .sw span {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .type-spec {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .type-spec .d {
+        font-family: var(--font-head);
+        font-size: 28px;
+        letter-spacing: -0.01em;
+      }
+      .type-spec .b {
+        font-family: var(--font-body);
+      }
+      .type-spec .h {
+        font-family: var(--font-hand);
+        font-size: 22px;
+        color: var(--accent-2);
+      }
 
       /* ---- Buttons ---- */
-      .btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; padding: 12px 20px; border-radius: var(--radius); transition: transform 0.12s var(--ease-bounce), box-shadow 0.2s, filter 0.2s; }
-      .btn:active { transform: translateY(2px) scale(0.98); }
-      .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
-      .btn-primary:hover { filter: brightness(1.05); }
-      .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
-      .btn-accent2 { background: var(--accent-2); color: #08221f; }
-      .pill { font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
-      body[data-variant="midnight"] .pill { color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+      .btn {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        transition:
+          transform 0.12s var(--ease-bounce),
+          box-shadow 0.2s,
+          filter 0.2s;
+      }
+      .btn:active {
+        transform: translateY(2px) scale(0.98);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+        box-shadow: var(--shadow);
+      }
+      .btn-primary:hover {
+        filter: brightness(1.05);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+      }
+      .btn-accent2 {
+        background: var(--accent-2);
+        color: #08221f;
+      }
+      .pill {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        color: var(--accent);
+      }
+      body[data-variant="midnight"] .pill {
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+      }
 
       /* ---- Sticker ---- */
       .sticker {
-        position: relative; width: 168px; min-height: 150px; padding: 18px 16px 16px;
-        background: var(--sticker-1); color: #2a2616; border-radius: 4px;
-        font-family: var(--font-hand); font-size: 18px; box-shadow: var(--shadow-sticker);
-        transform: rotate(-3deg); transition: transform 0.3s var(--ease-bounce);
+        position: relative;
+        width: 168px;
+        min-height: 150px;
+        padding: 18px 16px 16px;
+        background: var(--sticker-1);
+        color: #2a2616;
+        border-radius: 4px;
+        font-family: var(--font-hand);
+        font-size: 18px;
+        box-shadow: var(--shadow-sticker);
+        transform: rotate(-3deg);
+        transition: transform 0.3s var(--ease-bounce);
         cursor: grab;
       }
-      body[data-variant="confetti"] .sticker { border-radius: 14px; }
-      body[data-variant="midnight"] .sticker { color: var(--ink); border: 1px solid var(--line); }
-      .sticker:hover { transform: rotate(0deg) translateY(-6px) scale(1.03); }
-      .sticker.s2 { background: var(--sticker-2); transform: rotate(2deg); }
-      .sticker.s3 { background: var(--sticker-3); transform: rotate(-1deg); }
-      .tape {
-        position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-4deg);
-        width: 64px; height: 22px; background: color-mix(in srgb, var(--accent) 28%, #fff);
-        opacity: 0.7; border-radius: 2px;
+      body[data-variant="confetti"] .sticker {
+        border-radius: 14px;
       }
-      body[data-variant="atelier"] .tape { background: rgba(192, 83, 43, 0.22); }
-      .drop { animation: dropIn 0.7s var(--ease-bounce) both; }
+      body[data-variant="midnight"] .sticker {
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+      .sticker:hover {
+        transform: rotate(0deg) translateY(-6px) scale(1.03);
+      }
+      .sticker.s2 {
+        background: var(--sticker-2);
+        transform: rotate(2deg);
+      }
+      .sticker.s3 {
+        background: var(--sticker-3);
+        transform: rotate(-1deg);
+      }
+      .tape {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-4deg);
+        width: 64px;
+        height: 22px;
+        background: color-mix(in srgb, var(--accent) 28%, #fff);
+        opacity: 0.7;
+        border-radius: 2px;
+      }
+      body[data-variant="atelier"] .tape {
+        background: rgba(192, 83, 43, 0.22);
+      }
+      .drop {
+        animation: dropIn 0.7s var(--ease-bounce) both;
+      }
       @keyframes dropIn {
-        0% { transform: translateY(-60px) rotate(-12deg) scale(0.9); opacity: 0; }
-        70% { transform: translateY(6px) rotate(3deg) scale(1.02); opacity: 1; }
-        100% { transform: rotate(-3deg); opacity: 1; }
+        0% {
+          transform: translateY(-60px) rotate(-12deg) scale(0.9);
+          opacity: 0;
+        }
+        70% {
+          transform: translateY(6px) rotate(3deg) scale(1.02);
+          opacity: 1;
+        }
+        100% {
+          transform: rotate(-3deg);
+          opacity: 1;
+        }
       }
 
       /* ---- Map pins ---- */
-      .pinwrap { display: flex; gap: 40px; align-items: flex-end; padding: 10px 0; }
-      .pin { position: relative; width: 26px; height: 26px; border-radius: 50% 50% 50% 0; background: var(--accent); transform: rotate(-45deg); box-shadow: var(--shadow); }
-      .pin::after { content: ""; position: absolute; inset: 7px; background: var(--surface); border-radius: 50%; }
-      .pin.pub { background: var(--accent); }
-      .pin.cluster { width: 40px; height: 40px; border-radius: 50%; transform: none; display: grid; place-items: center; color: var(--accent-ink); font-weight: 800; }
-      .pin.cluster::after { display: none; }
-      .pin.priv { background: var(--muted); border-radius: 50%; transform: none; width: 16px; height: 16px; opacity: 0.6; }
-      .pin.priv::after { display: none; }
-      .pin.pulse { animation: pulse 2s infinite; }
+      .pinwrap {
+        display: flex;
+        gap: 40px;
+        align-items: flex-end;
+        padding: 10px 0;
+      }
+      .pin {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        border-radius: 50% 50% 50% 0;
+        background: var(--accent);
+        transform: rotate(-45deg);
+        box-shadow: var(--shadow);
+      }
+      .pin::after {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        background: var(--surface);
+        border-radius: 50%;
+      }
+      .pin.pub {
+        background: var(--accent);
+      }
+      .pin.cluster {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transform: none;
+        display: grid;
+        place-items: center;
+        color: var(--accent-ink);
+        font-weight: 800;
+      }
+      .pin.cluster::after {
+        display: none;
+      }
+      .pin.priv {
+        background: var(--muted);
+        border-radius: 50%;
+        transform: none;
+        width: 16px;
+        height: 16px;
+        opacity: 0.6;
+      }
+      .pin.priv::after {
+        display: none;
+      }
+      .pin.pulse {
+        animation: pulse 2s infinite;
+      }
       @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
-        70% { box-shadow: 0 0 0 16px transparent; }
-        100% { box-shadow: 0 0 0 0 transparent; }
+        0% {
+          box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+        }
+        70% {
+          box-shadow: 0 0 0 16px transparent;
+        }
+        100% {
+          box-shadow: 0 0 0 0 transparent;
+        }
       }
 
       /* ---- Board card (map preview) ---- */
-      .board-card { width: 260px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
-      .board-card .thumb { height: 120px; background: var(--bg-2); position: relative; display: grid; place-items: center; }
-      .board-card .mini { width: 60px; height: 56px; background: var(--sticker-1); transform: rotate(-6deg); border-radius: 3px; box-shadow: var(--shadow-sticker); }
-      .board-card .mini.b { position: absolute; background: var(--sticker-2); transform: rotate(8deg) translate(26px, 8px); }
-      .board-card .meta { padding: 14px 16px; }
-      .board-card .meta .t { font-family: var(--font-head); font-weight: 700; }
-      .board-card .meta .s { color: var(--muted); font-size: 13px; margin-top: 2px; }
-
-      /* ---- Toolbar ---- */
-      .toolbar { display: inline-flex; gap: 6px; padding: 8px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
-      .tool { width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: 18px; display: grid; place-items: center; transition: background 0.2s, transform 0.15s var(--ease-bounce); }
-      .tool:hover { background: var(--bg-2); transform: translateY(-2px); }
-      .tool.active { background: var(--accent); color: var(--accent-ink); }
-
-      /* ---- Visibility toggle ---- */
-      .seg { display: inline-flex; background: var(--bg-2); border-radius: 999px; padding: 4px; }
-      .seg button { border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 13px; color: var(--muted); padding: 8px 14px; border-radius: 999px; background: transparent; transition: all 0.2s var(--ease-soft); }
-      .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
-
-      /* ---- Share modal ---- */
-      .modal { width: 360px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
-      .modal .mh { padding: 18px 20px 10px; }
-      .modal .mh .t { font-family: var(--font-head); font-weight: 700; font-size: 18px; }
-      .modal .mb { padding: 4px 20px 18px; display: flex; flex-direction: column; gap: 12px; }
-      .linkbox { display: flex; gap: 8px; }
-      .linkbox input { flex: 1; min-width: 0; font: inherit; padding: 10px 12px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
-      .lock { display: flex; gap: 10px; align-items: center; padding: 12px; border-radius: var(--radius); border: 1px dashed var(--line); color: var(--muted); font-size: 13px; }
-      .lock .pill { margin-left: auto; }
-
-      /* ---- Screen mockups ---- */
-      .screen { border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--surface); }
-      .screen .chrome { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
-      .screen .chrome .d { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); opacity: 0.4; }
-      .screen .chrome .addr { margin-left: 8px; font-size: 12px; color: var(--muted); }
-
-      .map-screen { position: relative; height: 380px; background: var(--map-bg); }
-      .map-search { position: absolute; top: 16px; left: 16px; right: 16px; display: flex; gap: 10px; }
-      .map-search .field { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 11px 16px; color: var(--muted); box-shadow: var(--shadow); font-size: 14px; }
-      .map-pinpos { position: absolute; }
-      .map-card { position: absolute; bottom: 16px; left: 16px; }
-      .country { position: absolute; border-radius: 40% 55% 50% 45%; background: color-mix(in srgb, var(--ink) 6%, transparent); }
-      body[data-variant="midnight"] .country { background: color-mix(in srgb, #ffffff 5%, transparent); }
-
-      .editor { position: relative; height: 420px; background:
-        linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 26px 26px,
-        linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 26px 26px,
-        var(--bg); }
-      .editor .canvas-note { position: absolute; }
-      .editor .topbar2 { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; gap: 12px; }
-      .editor .title-in { font-family: var(--font-head); font-weight: 700; font-size: 18px; background: transparent; border: 0; border-bottom: 2px dashed var(--line); color: var(--ink); padding: 4px 2px; }
-      .editor .bottom { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 14px; }
-
-      /* ---- Confetti burst (save) ---- */
-      .confetti-host { position: relative; }
-      .confetti { position: absolute; width: 8px; height: 12px; top: 50%; left: 50%; opacity: 0; border-radius: 2px; }
-      .confetti.go { animation: pop 0.9s var(--ease-soft) forwards; }
-      @keyframes pop {
-        0% { opacity: 1; transform: translate(0, 0) rotate(0); }
-        100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(320deg); }
+      .board-card {
+        width: 260px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .board-card .thumb {
+        height: 120px;
+        background: var(--bg-2);
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+      .board-card .mini {
+        width: 60px;
+        height: 56px;
+        background: var(--sticker-1);
+        transform: rotate(-6deg);
+        border-radius: 3px;
+        box-shadow: var(--shadow-sticker);
+      }
+      .board-card .mini.b {
+        position: absolute;
+        background: var(--sticker-2);
+        transform: rotate(8deg) translate(26px, 8px);
+      }
+      .board-card .meta {
+        padding: 14px 16px;
+      }
+      .board-card .meta .t {
+        font-family: var(--font-head);
+        font-weight: 700;
+      }
+      .board-card .meta .s {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 2px;
       }
 
-      .note { font-size: 13px; color: var(--muted); margin-top: 10px; }
-      .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
-      .legend b { color: var(--ink); }
-      footer { margin-top: 72px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 24px; }
+      /* ---- Toolbar ---- */
+      .toolbar {
+        display: inline-flex;
+        gap: 6px;
+        padding: 8px;
+        border-radius: 999px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      .tool {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 18px;
+        display: grid;
+        place-items: center;
+        transition:
+          background 0.2s,
+          transform 0.15s var(--ease-bounce);
+      }
+      .tool:hover {
+        background: var(--bg-2);
+        transform: translateY(-2px);
+      }
+      .tool.active {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      /* ---- Visibility toggle ---- */
+      .seg {
+        display: inline-flex;
+        background: var(--bg-2);
+        border-radius: 999px;
+        padding: 4px;
+      }
+      .seg button {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--muted);
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: transparent;
+        transition: all 0.2s var(--ease-soft);
+      }
+      .seg button[aria-pressed="true"] {
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow);
+      }
+
+      /* ---- Share modal ---- */
+      .modal {
+        width: 360px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .modal .mh {
+        padding: 18px 20px 10px;
+      }
+      .modal .mh .t {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .modal .mb {
+        padding: 4px 20px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .linkbox {
+        display: flex;
+        gap: 8px;
+      }
+      .linkbox input {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .lock {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px;
+        border-radius: var(--radius);
+        border: 1px dashed var(--line);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .lock .pill {
+        margin-left: auto;
+      }
+
+      /* ---- Screen mockups ---- */
+      .screen {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        background: var(--surface);
+      }
+      .screen .chrome {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+      .screen .chrome .d {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--muted);
+        opacity: 0.4;
+      }
+      .screen .chrome .addr {
+        margin-left: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .map-screen {
+        position: relative;
+        height: 380px;
+        background: var(--map-bg);
+      }
+      .map-search {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        display: flex;
+        gap: 10px;
+      }
+      .map-search .field {
+        flex: 1;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 11px 16px;
+        color: var(--muted);
+        box-shadow: var(--shadow);
+        font-size: 14px;
+      }
+      .map-pinpos {
+        position: absolute;
+      }
+      .map-card {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+      }
+      .country {
+        position: absolute;
+        border-radius: 40% 55% 50% 45%;
+        background: color-mix(in srgb, var(--ink) 6%, transparent);
+      }
+      body[data-variant="midnight"] .country {
+        background: color-mix(in srgb, #ffffff 5%, transparent);
+      }
+
+      .editor {
+        position: relative;
+        height: 420px;
+        background:
+          linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 26px 26px,
+          linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 26px
+            26px,
+          var(--bg);
+      }
+      .editor .canvas-note {
+        position: absolute;
+      }
+      .editor .topbar2 {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .editor .title-in {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 18px;
+        background: transparent;
+        border: 0;
+        border-bottom: 2px dashed var(--line);
+        color: var(--ink);
+        padding: 4px 2px;
+      }
+      .editor .bottom {
+        position: absolute;
+        bottom: 16px;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+
+      /* ---- Confetti burst (save) ---- */
+      .confetti-host {
+        position: relative;
+      }
+      .confetti {
+        position: absolute;
+        width: 8px;
+        height: 12px;
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+        border-radius: 2px;
+      }
+      .confetti.go {
+        animation: pop 0.9s var(--ease-soft) forwards;
+      }
+      @keyframes pop {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) rotate(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--dx), var(--dy)) rotate(320deg);
+        }
+      }
+
+      .note {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 10px;
+      }
+      .legend {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .legend b {
+        color: var(--ink);
+      }
+      footer {
+        margin-top: 72px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid var(--line);
+        padding-top: 24px;
+      }
     </style>
   </head>
   <body data-variant="atelier">
@@ -288,11 +797,21 @@
           <div class="card">
             <h3>Palette</h3>
             <div class="swatches" style="margin-bottom: 28px">
-              <div class="sw" style="background: var(--bg)"><span>bg</span></div>
-              <div class="sw" style="background: var(--surface)"><span>surface</span></div>
-              <div class="sw" style="background: var(--accent)"><span>accent</span></div>
-              <div class="sw" style="background: var(--accent-2)"><span>accent-2</span></div>
-              <div class="sw" style="background: var(--ink)"><span>ink</span></div>
+              <div class="sw" style="background: var(--bg)">
+                <span>bg</span>
+              </div>
+              <div class="sw" style="background: var(--surface)">
+                <span>surface</span>
+              </div>
+              <div class="sw" style="background: var(--accent)">
+                <span>accent</span>
+              </div>
+              <div class="sw" style="background: var(--accent-2)">
+                <span>accent-2</span>
+              </div>
+              <div class="sw" style="background: var(--ink)">
+                <span>ink</span>
+              </div>
             </div>
           </div>
           <div class="card">
@@ -310,7 +829,9 @@
               <div class="sw" style="background: var(--sticker-2)"></div>
               <div class="sw" style="background: var(--sticker-3)"></div>
             </div>
-            <p class="note">Soft, low-saturation so handwriting stays legible.</p>
+            <p class="note">
+              Soft, low-saturation so handwriting stays legible.
+            </p>
           </div>
         </div>
       </section>
@@ -326,8 +847,10 @@
             <span class="pill">Premium</span>
             <span class="pill">Published</span>
           </div>
-          <p class="note">Press any button — motion prototype: bounce-down on
-            <code>:active</code>.</p>
+          <p class="note">
+            Press any button — motion prototype: bounce-down on
+            <code>:active</code>.
+          </p>
         </div>
       </section>
 
@@ -336,12 +859,20 @@
         <p class="sec-title">Stickers (drag · drop · rotate)</p>
         <div class="card">
           <div class="row" style="gap: 28px; align-items: flex-start">
-            <div class="sticker" id="dropSticker"><span class="tape"></span>Buy oat milk 🥛</div>
+            <div class="sticker" id="dropSticker">
+              <span class="tape"></span>Buy oat milk 🥛
+            </div>
             <div class="sticker s2">Sprint demo<br />Friday 4pm</div>
-            <div class="sticker s3"><span class="tape"></span>Call grandma ❤️</div>
+            <div class="sticker s3">
+              <span class="tape"></span>Call grandma ❤️
+            </div>
             <div style="display: flex; flex-direction: column; gap: 10px">
-              <button class="btn btn-ghost" id="dropBtn">▶ Replay drop animation</button>
-              <span class="note">Hover a sticker: it straightens &amp; lifts.</span>
+              <button class="btn btn-ghost" id="dropBtn">
+                ▶ Replay drop animation
+              </button>
+              <span class="note"
+                >Hover a sticker: it straightens &amp; lifts.</span
+              >
             </div>
           </div>
         </div>
@@ -365,8 +896,10 @@
               <div class="note">Private (anonymous)</div>
             </div>
           </div>
-          <p class="note">Privacy: private boards render as a faint anonymous dot —
-            no title, no preview, city/country level only.</p>
+          <p class="note">
+            Privacy: private boards render as a faint anonymous dot — no title,
+            no preview, city/country level only.
+          </p>
         </div>
       </section>
 
@@ -377,7 +910,10 @@
           <div class="card">
             <h3>Board preview card</h3>
             <div class="board-card">
-              <div class="thumb"><div class="mini"></div><div class="mini b"></div></div>
+              <div class="thumb">
+                <div class="mini"></div>
+                <div class="mini b"></div>
+              </div>
               <div class="meta">
                 <div class="t">Coffee Ideas ☕</div>
                 <div class="s">Berlin · 8 stickers · public</div>
@@ -406,7 +942,9 @@
               <div class="mb" style="padding: 0">
                 <div class="linkbox">
                   <input value="stickerboard.app/b/9fa2-coffee" readonly />
-                  <button class="btn btn-primary" style="padding: 10px 14px">Copy</button>
+                  <button class="btn btn-primary" style="padding: 10px 14px">
+                    Copy
+                  </button>
                 </div>
                 <div class="lock">
                   🔒 Invite editors by email
@@ -422,22 +960,46 @@
       <section>
         <p class="sec-title">Screen — Map discovery</p>
         <div class="screen">
-          <div class="chrome"><span class="d"></span><span class="d"></span><span class="d"></span><span class="addr">stickerboard.app</span></div>
+          <div class="chrome">
+            <span class="d"></span><span class="d"></span><span class="d"></span
+            ><span class="addr">stickerboard.app</span>
+          </div>
           <div class="map-screen">
-            <div class="country" style="width: 180px; height: 150px; left: 12%; top: 28%"></div>
-            <div class="country" style="width: 140px; height: 120px; left: 52%; top: 40%"></div>
-            <div class="country" style="width: 110px; height: 100px; left: 70%; top: 16%"></div>
+            <div
+              class="country"
+              style="width: 180px; height: 150px; left: 12%; top: 28%"
+            ></div>
+            <div
+              class="country"
+              style="width: 140px; height: 120px; left: 52%; top: 40%"
+            ></div>
+            <div
+              class="country"
+              style="width: 110px; height: 100px; left: 70%; top: 16%"
+            ></div>
             <div class="map-search">
               <div class="field">🔍 Search a city or country…</div>
               <button class="btn btn-primary">New board</button>
             </div>
-            <div class="map-pinpos" style="left: 22%; top: 46%"><div class="pin pub pulse"></div></div>
-            <div class="map-pinpos" style="left: 58%; top: 52%"><div class="pin cluster">7</div></div>
-            <div class="map-pinpos" style="left: 74%; top: 30%"><div class="pin priv"></div></div>
+            <div class="map-pinpos" style="left: 22%; top: 46%">
+              <div class="pin pub pulse"></div>
+            </div>
+            <div class="map-pinpos" style="left: 58%; top: 52%">
+              <div class="pin cluster">7</div>
+            </div>
+            <div class="map-pinpos" style="left: 74%; top: 30%">
+              <div class="pin priv"></div>
+            </div>
             <div class="map-card">
               <div class="board-card" style="width: 230px">
-                <div class="thumb"><div class="mini"></div><div class="mini b"></div></div>
-                <div class="meta"><div class="t">Coffee Ideas ☕</div><div class="s">Berlin · public</div></div>
+                <div class="thumb">
+                  <div class="mini"></div>
+                  <div class="mini b"></div>
+                </div>
+                <div class="meta">
+                  <div class="t">Coffee Ideas ☕</div>
+                  <div class="s">Berlin · public</div>
+                </div>
               </div>
             </div>
           </div>
@@ -448,7 +1010,10 @@
       <section>
         <p class="sec-title">Screen — Board editor</p>
         <div class="screen">
-          <div class="chrome"><span class="d"></span><span class="d"></span><span class="d"></span><span class="addr">stickerboard.app/b/new</span></div>
+          <div class="chrome">
+            <span class="d"></span><span class="d"></span><span class="d"></span
+            ><span class="addr">stickerboard.app/b/new</span>
+          </div>
           <div class="editor">
             <div class="topbar2">
               <input class="title-in" value="Coffee Ideas" />
@@ -457,9 +1022,17 @@
                 <button aria-pressed="false">Private</button>
               </div>
             </div>
-            <div class="canvas-note" style="left: 12%; top: 34%"><div class="sticker">First idea ✨</div></div>
-            <div class="canvas-note" style="left: 40%; top: 26%"><div class="sticker s2"><span class="tape"></span>Espresso bar?</div></div>
-            <div class="canvas-note" style="left: 64%; top: 40%"><div class="sticker s3">Mood: cozy</div></div>
+            <div class="canvas-note" style="left: 12%; top: 34%">
+              <div class="sticker">First idea ✨</div>
+            </div>
+            <div class="canvas-note" style="left: 40%; top: 26%">
+              <div class="sticker s2">
+                <span class="tape"></span>Espresso bar?
+              </div>
+            </div>
+            <div class="canvas-note" style="left: 64%; top: 40%">
+              <div class="sticker s3">Mood: cozy</div>
+            </div>
             <div class="bottom">
               <div class="toolbar">
                 <button class="tool active">🗒️</button>
@@ -468,18 +1041,23 @@
                 <button class="tool">🖼️</button>
               </div>
               <div class="confetti-host">
-                <button class="btn btn-accent2" id="saveBtn">Save &amp; publish</button>
+                <button class="btn btn-accent2" id="saveBtn">
+                  Save &amp; publish
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <p class="note">Press <b>Save &amp; publish</b> — motion prototype: confetti
-          burst (most exuberant in Confetti, subtle in Atelier/Midnight).</p>
+        <p class="note">
+          Press <b>Save &amp; publish</b> — motion prototype: confetti burst
+          (most exuberant in Confetti, subtle in Atelier/Midnight).
+        </p>
       </section>
 
       <footer>
-        StickerBoard design book · proposal for approval · switch variants above ·
-        tell me which elements to <b>approve</b>, <b>change</b>, or <b>mix</b>.
+        StickerBoard design book · proposal for approval · switch variants above
+        · tell me which elements to <b>approve</b>, <b>change</b>, or
+        <b>mix</b>.
       </footer>
     </div>
 
@@ -505,9 +1083,9 @@
         b.addEventListener("click", () => {
           const v = b.dataset.v;
           body.setAttribute("data-variant", v);
-          document.querySelectorAll(".switcher button").forEach((x) =>
-            x.setAttribute("aria-pressed", String(x === b)),
-          );
+          document
+            .querySelectorAll(".switcher button")
+            .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
           heroT.textContent = copy[v].title;
           heroL.textContent = copy[v].lede;
         });
@@ -532,8 +1110,14 @@
           c.className = "confetti";
           c.style.background = colors[i % colors.length];
           const ang = (Math.PI * 2 * i) / 18;
-          c.style.setProperty("--dx", Math.cos(ang) * (60 + Math.random() * 50) + "px");
-          c.style.setProperty("--dy", Math.sin(ang) * (60 + Math.random() * 50) - 20 + "px");
+          c.style.setProperty(
+            "--dx",
+            Math.cos(ang) * (60 + Math.random() * 50) + "px",
+          );
+          c.style.setProperty(
+            "--dy",
+            Math.sin(ang) * (60 + Math.random() * 50) - 20 + "px",
+          );
           host.appendChild(c);
           requestAnimationFrame(() => c.classList.add("go"));
           setTimeout(() => c.remove(), 1000);

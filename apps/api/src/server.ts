@@ -1,22 +1,28 @@
 import Fastify, { type FastifyInstance } from "fastify";
 import fastifyJwt from "@fastify/jwt";
+import fastifyCors from "@fastify/cors";
 import type { Knex } from "knex";
 import { registerAuthRoutes } from "./routes/auth.js";
 import { registerBoardRoutes } from "./routes/boards.js";
+import { registerMapRoutes } from "./routes/map.js";
 import { registerAuthDecorator } from "./auth/jwt.js";
 
 export interface BuildServerOptions {
   knex: Knex;
   jwtSecret?: string;
+  /** Allowed CORS origin(s); defaults to reflecting the request origin (dev). */
+  corsOrigin?: boolean | string | string[];
 }
 
 /** Build the Fastify app. Knex is injected so tests can pass a test DB. */
 export function buildServer({
   knex,
   jwtSecret,
+  corsOrigin = true,
 }: BuildServerOptions): FastifyInstance {
   const app = Fastify({ logger: false });
 
+  app.register(fastifyCors, { origin: corsOrigin });
   app.register(fastifyJwt, {
     secret: jwtSecret ?? process.env.JWT_SECRET ?? "dev-secret-change-me",
   });
@@ -27,6 +33,7 @@ export function buildServer({
     registerAuthDecorator(instance);
     registerAuthRoutes(instance, knex);
     registerBoardRoutes(instance, knex);
+    registerMapRoutes(instance, knex);
   });
 
   return app;
