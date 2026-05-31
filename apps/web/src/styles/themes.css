@@ -1,0 +1,77 @@
+/* Design tokens, one set per theme. Components must only read these vars —
+   never hardcode colors — so adding/removing a theme is just editing this file.
+   Values mirror the approved design book (design/design-book/index.html). */
+
+:root {
+  --maxw: 1100px;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme="atelier"] {
+  --bg: #f4f2ec;
+  --bg-2: #eae4d8;
+  --surface: #ffffff;
+  --ink: #1d1b17;
+  --muted: #6c675d;
+  --line: #e2ddd2;
+  --accent: #2f5d50;
+  --accent-ink: #ffffff;
+  --accent-2: #c0532b;
+  --sticker-1: #f7e9c3;
+  --sticker-2: #d8e7d2;
+  --sticker-3: #f3d4d0;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 2px rgba(29, 27, 23, 0.06), 0 8px 24px rgba(29, 27, 23, 0.08);
+  --shadow-sticker: 0 10px 20px rgba(29, 27, 23, 0.12);
+  --font-head: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-hand: "Bradley Hand", "Segoe Print", cursive;
+}
+
+:root[data-theme="confetti"] {
+  --bg: #fff6fb;
+  --bg-2: #ffe9f4;
+  --surface: #ffffff;
+  --ink: #3a2e4d;
+  --muted: #9a8fb0;
+  --line: #ffe0ef;
+  --accent: #ff5da2;
+  --accent-ink: #ffffff;
+  --accent-2: #4ecdc4;
+  --sticker-1: #fff1a8;
+  --sticker-2: #b8f2e6;
+  --sticker-3: #ffc6e0;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow:
+    0 6px 0 rgba(255, 93, 162, 0.12), 0 12px 28px rgba(124, 58, 120, 0.12);
+  --shadow-sticker: 0 12px 22px rgba(124, 58, 120, 0.18);
+  --font-head: "Baloo 2", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Nunito", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --font-hand: "Segoe Print", "Comic Sans MS", cursive;
+}
+
+:root[data-theme="midnight"] {
+  --bg: #0d1016;
+  --bg-2: #11151d;
+  --surface: #171c26;
+  --ink: #e9edf4;
+  --muted: #8b95a7;
+  --line: #232b38;
+  --accent: #6ee7ff;
+  --accent-ink: #06222b;
+  --accent-2: #a78bfa;
+  --sticker-1: #2a2f1d;
+  --sticker-2: #112a2c;
+  --sticker-3: #2a1530;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 14px 34px rgba(0, 0, 0, 0.55);
+  --shadow-sticker: 0 14px 30px rgba(0, 0, 0, 0.6);
+  --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-hand: "Segoe Print", cursive;
+}
