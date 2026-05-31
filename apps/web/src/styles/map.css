@@ -103,6 +103,54 @@
   cursor: pointer;
 }
 
+/* ---- Category filter bar ---- */
+.filter-bar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+.filter-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--bg-2);
+  cursor: pointer;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  opacity: 0.45;
+  transition:
+    opacity 0.2s,
+    transform 0.15s var(--ease-bounce);
+}
+.filter-chip:hover {
+  transform: translateY(-1px);
+}
+.filter-chip.is-on {
+  opacity: 1;
+}
+.filter-chip--help.is-on {
+  background: var(--cat-help);
+}
+.filter-chip--meet.is-on {
+  background: var(--cat-meet);
+}
+.filter-chip--whatif.is-on {
+  background: var(--cat-whatif);
+}
+.filter-chip--cry.is-on {
+  background: var(--cat-cry);
+}
+
 .map-locate {
   position: absolute;
   right: 14px;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Supercluster from "supercluster";
@@ -6,13 +6,17 @@ import type { MapItem, NoteCategory } from "@stickerboard/shared";
 import { useMapPins } from "./useMapPins.js";
 import { CategoryPicker } from "./CategoryPicker.js";
 import { StickerComposer } from "./StickerComposer.js";
+import { FilterBar } from "./FilterBar.js";
+import { CATEGORIES } from "./categories.js";
 import { locateByBrowser, locateByIp } from "./geolocate.js";
 import { useAuth } from "../auth/AuthProvider.js";
 import { toggleReaction } from "../api/client.js";
 import { CLUSTER_OPTIONS, toFeatures, type ItemProps } from "./clusterModel.js";
 
-// Keyless demo style — no API token needed.
-const STYLE = "https://demotiles.maplibre.org/style.json";
+// OpenFreeMap: free, no API key, open-source vector street tiles.
+const STYLE = "https://tiles.openfreemap.org/styles/positron";
+
+const ALL_CATS: NoteCategory[] = CATEGORIES.map((c) => c.id);
 
 function expiryLabel(iso: string | null): string {
   return iso ? `Expires ${new Date(iso).toLocaleString()}` : "Permanent";
@@ -36,6 +40,27 @@ export function MapView() {
   const [reactErr, setReactErr] = useState<string | null>(null);
   const [category, setCategory] = useState<NoteCategory | null>(null);
   const [locating, setLocating] = useState(false);
+  const [activeCats, setActiveCats] = useState<Set<NoteCategory>>(
+    () => new Set(ALL_CATS),
+  );
+
+  function toggleCat(id: NoteCategory) {
+    setActiveCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  // All selected = show everything (incl. uncategorized); otherwise only the
+  // chosen categories.
+  const filteredPins = useMemo(() => {
+    if (activeCats.size === ALL_CATS.length) return pins;
+    return pins.filter(
+      (p) => p.category !== undefined && activeCats.has(p.category),
+    );
+  }, [pins, activeCats]);
 
   // Center the map on the user: "ip" is silent/approximate (works on LAN http);
   // "gps" prompts for precise location and falls back to IP if blocked/denied.
@@ -163,17 +188,19 @@ export function MapView() {
     };
   }, [renderMarkers, centerOnUser]);
 
-  // Rebuild the cluster index whenever the pin set changes.
+  // Rebuild the cluster index whenever the (filtered) pin set changes.
   useEffect(() => {
     indexRef.current = new Supercluster<ItemProps>(CLUSTER_OPTIONS).load(
-      toFeatures(pins),
+      toFeatures(filteredPins),
     );
     renderMarkers();
-  }, [pins, renderMarkers]);
+  }, [filteredPins, renderMarkers]);
 
   return (
     <div className="map-screen">
       <div ref={containerRef} className="map-canvas" />
+
+      <FilterBar active={activeCats} onToggle={toggleCat} />
 
       <button
         className="map-locate"
