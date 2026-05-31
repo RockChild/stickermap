@@ -14,8 +14,10 @@ export function App() {
           <div className="brand">
             Sticker<span className="dot">●</span>Board
           </div>
-          <AuthBar />
-          <ThemeSwitcher />
+          <div className="appbar__actions">
+            <ThemeSwitcher />
+            <AuthBar />
+          </div>
         </div>
       </header>
       <main className="app__main">

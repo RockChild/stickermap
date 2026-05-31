@@ -11,16 +11,46 @@
 
 /* ---- Auth bar (header) ---- */
 .authbar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
-  flex-wrap: wrap;
 }
 .authbar__who {
   font-size: 13px;
   color: var(--muted);
   font-weight: 600;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.authbar__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+}
+.authbar__pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  width: min(240px, calc(100vw - 24px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+.authbar__actions {
+  display: flex;
+  gap: 8px;
+}
+.authbar__actions .btn {
+  flex: 1;
 }
 .authbar__err {
   font-size: 12px;
@@ -38,10 +68,15 @@
   background: var(--surface);
   color: var(--ink);
 }
-.field--sm {
-  padding: 7px 10px;
-  font-size: 13px;
-  width: 130px;
+
+/* On narrow screens the theme switcher shows just its emoji to save room. */
+@media (max-width: 480px) {
+  .theme-switcher__label {
+    display: none;
+  }
+  .theme-switcher {
+    padding: 9px 12px;
+  }
 }
 
 /* ---- Map ---- */
