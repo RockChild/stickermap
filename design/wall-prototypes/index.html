@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StickerBoard — Wall Prototypes</title>
+    <style>
+      /* ===== Tokens (3 themes + category colors), from the design book ===== */
+      :root {
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      body[data-theme="atelier"] {
+        --bg: #f4f2ec;
+        --bg-2: #eae4d8;
+        --surface: #fff;
+        --ink: #1d1b17;
+        --muted: #6c675d;
+        --line: #e2ddd2;
+        --accent: #2f5d50;
+        --accent-ink: #fff;
+        --radius: 8px;
+        --radius-lg: 14px;
+        --shadow:
+          0 1px 2px rgba(29, 27, 23, 0.06), 0 8px 24px rgba(29, 27, 23, 0.08);
+        --shadow-sticker: 0 10px 20px rgba(29, 27, 23, 0.14);
+        --font-head: "Iowan Old Style", Georgia, serif;
+        --font-body: "Inter", system-ui, sans-serif;
+        --font-hand: "Bradley Hand", "Segoe Print", cursive;
+        --cat-help: #e6b3a3;
+        --cat-meet: #cfe0c8;
+        --cat-whatif: #f0dca8;
+        --cat-cry: #b9cdde;
+      }
+      body[data-theme="confetti"] {
+        --bg: #fff6fb;
+        --bg-2: #ffe9f4;
+        --surface: #fff;
+        --ink: #3a2e4d;
+        --muted: #9a8fb0;
+        --line: #ffe0ef;
+        --accent: #ff5da2;
+        --accent-ink: #fff;
+        --radius: 16px;
+        --radius-lg: 24px;
+        --shadow:
+          0 6px 0 rgba(255, 93, 162, 0.12), 0 12px 28px rgba(124, 58, 120, 0.12);
+        --shadow-sticker: 0 12px 22px rgba(124, 58, 120, 0.2);
+        --font-head: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+        --font-body: "Nunito", "Trebuchet MS", system-ui, sans-serif;
+        --font-hand: "Segoe Print", "Comic Sans MS", cursive;
+        --cat-help: #ffb3c1;
+        --cat-meet: #b8f2e6;
+        --cat-whatif: #fff1a8;
+        --cat-cry: #bcd3ff;
+      }
+      body[data-theme="midnight"] {
+        --bg: #0d1016;
+        --bg-2: #11151d;
+        --surface: #171c26;
+        --ink: #e9edf4;
+        --muted: #8b95a7;
+        --line: #232b38;
+        --accent: #6ee7ff;
+        --accent-ink: #06222b;
+        --radius: 10px;
+        --radius-lg: 16px;
+        --shadow:
+          0 1px 0 rgba(255, 255, 255, 0.04) inset,
+          0 14px 34px rgba(0, 0, 0, 0.55);
+        --shadow-sticker: 0 14px 30px rgba(0, 0, 0, 0.6);
+        --font-head: "Space Grotesk", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
+        --font-hand: "Segoe Print", cursive;
+        --cat-help: #4a2030;
+        --cat-meet: #103436;
+        --cat-whatif: #34301a;
+        --cat-cry: #1a2945;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        transition:
+          background 0.35s var(--ease-soft),
+          color 0.35s var(--ease-soft);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .ink-mid {
+        color: #2a2616;
+      }
+      body[data-theme="midnight"] .sticker,
+      body[data-theme="midnight"] .row-sticker {
+        color: var(--ink);
+      }
+
+      /* ===== Top bar ===== */
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+        flex-wrap: wrap;
+        background: color-mix(in srgb, var(--bg) 85%, transparent);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .brand .dot {
+        color: var(--accent);
+      }
+      .tabs {
+        display: flex;
+        gap: 6px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 5px;
+      }
+      .tabs button {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        padding: 8px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        background: transparent;
+      }
+      .tabs button[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+      .themes {
+        margin-left: auto;
+        display: flex;
+        gap: 6px;
+      }
+      .themes button {
+        border: 1px solid var(--line);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--ink);
+      }
+      .themes button[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border-color: transparent;
+      }
+
+      .desc {
+        padding: 14px 20px 0;
+        color: var(--muted);
+        max-width: 760px;
+      }
+      .desc b {
+        color: var(--ink);
+      }
+      .stage {
+        flex: 1;
+        padding: 16px 20px 40px;
+      }
+      .proto {
+        display: none;
+      }
+      .proto.show {
+        display: block;
+      }
+
+      /* ===== Shared sticker look ===== */
+      .sticker {
+        padding: 18px 14px 12px;
+        border-radius: 4px;
+        box-shadow: var(--shadow-sticker);
+        font-family: var(--font-hand);
+        color: #2a2616;
+        position: relative;
+      }
+      body[data-theme="confetti"] .sticker {
+        border-radius: 14px;
+      }
+      .sticker.help {
+        background: var(--cat-help);
+      }
+      .sticker.meet {
+        background: var(--cat-meet);
+      }
+      .sticker.whatif {
+        background: var(--cat-whatif);
+      }
+      .sticker.cry {
+        background: var(--cat-cry);
+      }
+      .tape {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-4deg);
+        width: 58px;
+        height: 20px;
+        background: color-mix(in srgb, var(--accent) 26%, #fff);
+        opacity: 0.7;
+        border-radius: 2px;
+      }
+      .s-text {
+        font-size: 17px;
+        line-height: 1.3;
+      }
+      .s-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 10px;
+        font-family: var(--font-body);
+      }
+      .s-author {
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .s-react {
+        font-size: 12px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        padding: 2px 8px;
+      }
+      body[data-theme="midnight"] .s-react {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .pin {
+        position: absolute;
+        top: -10px;
+        right: -6px;
+        font-size: 16px;
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+      }
+
+      .add {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        color: var(--accent-ink);
+        background: var(--accent);
+        border-radius: var(--radius);
+        padding: 12px 18px;
+        box-shadow: var(--shadow);
+        transition: transform 0.12s var(--ease-bounce);
+      }
+      .add:active {
+        transform: translateY(2px) scale(0.98);
+      }
+
+      /* ===== A — Corkboard ===== */
+      .cork {
+        position: relative;
+        height: 560px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        background-color: var(--bg-2);
+        background-image: radial-gradient(var(--line) 1.4px, transparent 1.4px);
+        background-size: 22px 22px;
+      }
+      .cork .sticker {
+        position: absolute;
+        width: 150px;
+        transition:
+          transform 0.2s var(--ease-bounce),
+          box-shadow 0.2s;
+      }
+      .cork .sticker:hover {
+        transform: rotate(0deg) translateY(-6px) scale(1.05) !important;
+        z-index: 5;
+        box-shadow: 0 20px 36px rgba(0, 0, 0, 0.2);
+      }
+      .cork .add {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index: 6;
+      }
+
+      /* ===== B — Tidy grid ===== */
+      .shelf-label {
+        font-family: var(--font-head);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 4px 0 12px;
+      }
+      .grid {
+        columns: 4 200px;
+        column-gap: 16px;
+      }
+      .grid .sticker {
+        break-inside: avoid;
+        margin: 0 0 16px;
+        width: 100%;
+        transition: transform 0.15s var(--ease-bounce);
+      }
+      .grid .sticker:hover {
+        transform: translateY(-3px);
+      }
+      .b-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 16px;
+      }
+
+      /* ===== C — Stream ===== */
+      .stream {
+        max-width: 560px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .c-compose {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+      }
+      .c-compose input {
+        flex: 1;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        color: var(--ink);
+        outline: none;
+      }
+      .row-sticker {
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 6px solid var(--accent);
+        border-radius: var(--radius-lg);
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+      }
+      .row-sticker.help {
+        border-left-color: var(--cat-help);
+      }
+      .row-sticker.meet {
+        border-left-color: var(--cat-meet);
+      }
+      .row-sticker.whatif {
+        border-left-color: var(--cat-whatif);
+      }
+      .row-sticker.cry {
+        border-left-color: var(--cat-cry);
+      }
+      .row-body {
+        flex: 1;
+      }
+      .row-text {
+        font-family: var(--font-hand);
+        font-size: 18px;
+      }
+      .row-meta {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .row-react {
+        margin-left: auto;
+        font-weight: 700;
+      }
+      .pill {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        color: var(--accent);
+      }
+
+      footer {
+        padding: 18px 20px 40px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body data-theme="atelier">
+    <div class="top">
+      <div class="brand">
+        Sticker<span class="dot">●</span>Board · Wall sketches
+      </div>
+      <div class="tabs" role="group">
+        <button data-p="cork" aria-pressed="true">A · Corkboard</button>
+        <button data-p="grid" aria-pressed="false">B · Tidy grid</button>
+        <button data-p="stream" aria-pressed="false">C · Stream</button>
+      </div>
+      <div class="themes" role="group">
+        <button data-t="atelier" aria-pressed="true">Atelier</button>
+        <button data-t="confetti" aria-pressed="false">Confetti</button>
+        <button data-t="midnight" aria-pressed="false">Midnight</button>
+      </div>
+    </div>
+
+    <p class="desc" id="desc"></p>
+
+    <div class="stage">
+      <!-- A — Corkboard -->
+      <section class="proto show" data-proto="cork">
+        <div class="cork">
+          <div
+            class="sticker meet"
+            style="left: 6%; top: 8%; transform: rotate(-3deg)"
+          >
+            <span class="tape"></span><span class="pin">📌</span>
+            <div class="s-text">Coffee Sat 10am? ☕</div>
+            <div class="s-foot">
+              <span class="s-author">@demo_friend</span
+              ><span class="s-react">👍 5</span>
+            </div>
+          </div>
+          <div
+            class="sticker whatif"
+            style="left: 33%; top: 5%; transform: rotate(2deg)"
+          >
+            <span class="tape"></span>
+            <div class="s-text">what if we did a rooftop movie night 🎬</div>
+            <div class="s-foot">
+              <span class="s-author">@sunny_otter</span
+              ><span class="s-react">👍 3</span>
+            </div>
+          </div>
+          <div
+            class="sticker help"
+            style="left: 62%; top: 12%; transform: rotate(-1deg)"
+          >
+            <span class="tape"></span>
+            <div class="s-text">need a ride to the airport Fri 🙏</div>
+            <div class="s-foot">
+              <span class="s-author">@brave_maple</span
+              ><span class="s-react">👍 1</span>
+            </div>
+          </div>
+          <div
+            class="sticker cry"
+            style="left: 16%; top: 46%; transform: rotate(3deg)"
+          >
+            <span class="tape"></span>
+            <div class="s-text">missing the old café 😢</div>
+            <div class="s-foot">
+              <span class="s-author">@mellow_fox</span
+              ><span class="s-react">👍 2</span>
+            </div>
+          </div>
+          <div
+            class="sticker meet"
+            style="left: 44%; top: 52%; transform: rotate(-2deg)"
+          >
+            <span class="tape"></span>
+            <div class="s-text">board game night?</div>
+            <div class="s-foot">
+              <span class="s-author">@keen_robin</span
+              ><span class="s-react">👍 4</span>
+            </div>
+          </div>
+          <div
+            class="sticker whatif"
+            style="left: 70%; top: 50%; transform: rotate(2deg)"
+          >
+            <span class="tape"></span>
+            <div class="s-text">what if pizza for breakfast 🍕</div>
+            <div class="s-foot">
+              <span class="s-author">@jolly_mango</span
+              ><span class="s-react">👍 6</span>
+            </div>
+          </div>
+          <button class="add">＋ Stick a sticker</button>
+        </div>
+      </section>
+
+      <!-- B — Tidy grid -->
+      <section class="proto" data-proto="grid">
+        <div class="b-actions">
+          <button class="add">＋ Stick a sticker</button>
+        </div>
+        <div class="shelf-label">📌 Pinned</div>
+        <div class="grid" style="columns: 4 220px">
+          <div class="sticker meet">
+            <div class="s-text">Coffee Sat 10am? ☕</div>
+            <div class="s-foot">
+              <span class="s-author">@demo_friend</span
+              ><span class="s-react">👍 5</span>
+            </div>
+          </div>
+        </div>
+        <div class="shelf-label">Recent</div>
+        <div class="grid">
+          <div class="sticker whatif">
+            <div class="s-text">what if we did a rooftop movie night 🎬</div>
+            <div class="s-foot">
+              <span class="s-author">@sunny_otter</span
+              ><span class="s-react">👍 3</span>
+            </div>
+          </div>
+          <div class="sticker help">
+            <div class="s-text">need a ride to the airport Fri 🙏</div>
+            <div class="s-foot">
+              <span class="s-author">@brave_maple</span
+              ><span class="s-react">👍 1</span>
+            </div>
+          </div>
+          <div class="sticker cry">
+            <div class="s-text">missing the old café 😢</div>
+            <div class="s-foot">
+              <span class="s-author">@mellow_fox</span
+              ><span class="s-react">👍 2</span>
+            </div>
+          </div>
+          <div class="sticker meet">
+            <div class="s-text">board game night?</div>
+            <div class="s-foot">
+              <span class="s-author">@keen_robin</span
+              ><span class="s-react">👍 4</span>
+            </div>
+          </div>
+          <div class="sticker whatif">
+            <div class="s-text">what if pizza for breakfast 🍕</div>
+            <div class="s-foot">
+              <span class="s-author">@jolly_mango</span
+              ><span class="s-react">👍 6</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C — Stream -->
+      <section class="proto" data-proto="stream">
+        <div class="stream">
+          <div class="c-compose">
+            <input
+              placeholder="Stick something on @demo_friend's wall…"
+            /><button class="add">Stick</button>
+          </div>
+          <div class="row-sticker meet">
+            <div class="row-body">
+              <div class="row-text">Coffee Sat 10am? ☕</div>
+              <div class="row-meta">
+                <span class="pill">📌 pinned</span><span>@demo_friend</span
+                ><span>·</span><span>2h</span
+                ><span class="row-react">👍 5</span>
+              </div>
+            </div>
+          </div>
+          <div class="row-sticker whatif">
+            <div class="row-body">
+              <div class="row-text">
+                what if we did a rooftop movie night 🎬
+              </div>
+              <div class="row-meta">
+                <span>@sunny_otter</span><span>·</span><span>4h</span
+                ><span class="row-react">👍 3</span>
+              </div>
+            </div>
+          </div>
+          <div class="row-sticker help">
+            <div class="row-body">
+              <div class="row-text">need a ride to the airport Fri 🙏</div>
+              <div class="row-meta">
+                <span>@brave_maple</span><span>·</span><span>6h</span
+                ><span class="row-react">👍 1</span>
+              </div>
+            </div>
+          </div>
+          <div class="row-sticker cry">
+            <div class="row-body">
+              <div class="row-text">missing the old café 😢</div>
+              <div class="row-meta">
+                <span>@mellow_fox</span><span>·</span><span>1d</span
+                ><span class="row-react">👍 2</span>
+              </div>
+            </div>
+          </div>
+          <div class="row-sticker meet">
+            <div class="row-body">
+              <div class="row-text">board game night?</div>
+              <div class="row-meta">
+                <span>@keen_robin</span><span>·</span><span>1d</span
+                ><span class="row-react">👍 4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      Same wall, three layouts. Switch themes top-right. Pick A, B, or C (or
+      mix) — we develop the winner, then sketch the next set.
+    </footer>
+
+    <script>
+      const DESCS = {
+        cork: "<b>A · Corkboard</b> — freeform: stickers land anywhere, tilted, with tape. Tactile and personal (fridge/cork vibe). Best for small, expressive walls; can get messy when full.",
+        grid: "<b>B · Tidy grid</b> — auto-arranged masonry; pinned stickers sit on a shelf up top. Scannable and scales to many stickers; less playful, more organized.",
+        stream:
+          "<b>C · Stream</b> — a chronological feed (newest first) with author + time + reactions. Social/guestbook feel, mobile-first; loses the spatial 'wall' metaphor.",
+      };
+      const body = document.body,
+        desc = document.getElementById("desc");
+      function setProto(p) {
+        document
+          .querySelectorAll(".proto")
+          .forEach((s) => s.classList.toggle("show", s.dataset.proto === p));
+        document
+          .querySelectorAll(".tabs button")
+          .forEach((b) =>
+            b.setAttribute("aria-pressed", String(b.dataset.p === p)),
+          );
+        desc.innerHTML = DESCS[p];
+      }
+      document
+        .querySelectorAll(".tabs button")
+        .forEach((b) =>
+          b.addEventListener("click", () => setProto(b.dataset.p)),
+        );
+      document.querySelectorAll(".themes button").forEach((b) =>
+        b.addEventListener("click", () => {
+          body.setAttribute("data-theme", b.dataset.t);
+          document
+            .querySelectorAll(".themes button")
+            .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        }),
+      );
+      setProto("cork");
+    </script>
+  </body>
+</html>
