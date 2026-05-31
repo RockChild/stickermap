@@ -103,6 +103,31 @@
   cursor: pointer;
 }
 
+.map-locate {
+  position: absolute;
+  right: 14px;
+  bottom: 36px;
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s var(--ease-bounce);
+}
+.map-locate:hover {
+  transform: translateY(-2px);
+}
+.map-locate:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .map-hint {
   position: absolute;
   top: 14px;

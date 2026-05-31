@@ -6,6 +6,7 @@ import type { MapItem, NoteCategory } from "@stickerboard/shared";
 import { useMapPins } from "./useMapPins.js";
 import { CategoryPicker } from "./CategoryPicker.js";
 import { StickerComposer } from "./StickerComposer.js";
+import { locateByBrowser, locateByIp } from "./geolocate.js";
 import { useAuth } from "../auth/AuthProvider.js";
 import { toggleReaction } from "../api/client.js";
 import { CLUSTER_OPTIONS, toFeatures, type ItemProps } from "./clusterModel.js";
@@ -34,6 +35,24 @@ export function MapView() {
   const [clusterList, setClusterList] = useState<MapItem[] | null>(null);
   const [reactErr, setReactErr] = useState<string | null>(null);
   const [category, setCategory] = useState<NoteCategory | null>(null);
+  const [locating, setLocating] = useState(false);
+
+  // Center the map on the user: "ip" is silent/approximate (works on LAN http);
+  // "gps" prompts for precise location and falls back to IP if blocked/denied.
+  const centerOnUser = useCallback(async (mode: "ip" | "gps") => {
+    setLocating(true);
+    const result =
+      mode === "gps"
+        ? ((await locateByBrowser()) ?? (await locateByIp()))
+        : await locateByIp();
+    setLocating(false);
+    if (result && mapRef.current) {
+      mapRef.current.flyTo({
+        center: [result.lng, result.lat],
+        zoom: result.source === "gps" ? 14 : 11,
+      });
+    }
+  }, []);
 
   function flyTo(item: MapItem) {
     mapRef.current?.flyTo({
@@ -128,6 +147,7 @@ export function MapView() {
     map.on("load", () => {
       loadedRef.current = true;
       renderMarkers();
+      void centerOnUser("ip");
     });
     map.on("moveend", renderMarkers);
     // A click on empty map (not on a marker) starts a new sticker.
@@ -141,7 +161,7 @@ export function MapView() {
       mapRef.current = null;
       loadedRef.current = false;
     };
-  }, [renderMarkers]);
+  }, [renderMarkers, centerOnUser]);
 
   // Rebuild the cluster index whenever the pin set changes.
   useEffect(() => {
@@ -154,6 +174,16 @@ export function MapView() {
   return (
     <div className="map-screen">
       <div ref={containerRef} className="map-canvas" />
+
+      <button
+        className="map-locate"
+        onClick={() => void centerOnUser("gps")}
+        disabled={locating}
+        title="Find my location"
+        aria-label="Find my location"
+      >
+        {locating ? "…" : "📍"}
+      </button>
 
       {!pending && !selected && !clusterList && (
         <div className="map-hint">
