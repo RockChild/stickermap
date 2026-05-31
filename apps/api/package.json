@@ -7,6 +7,7 @@
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "migrate": "tsx scripts/migrate.ts",
+    "seed:map": "tsx scripts/seed-map.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
