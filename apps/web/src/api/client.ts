@@ -79,6 +79,23 @@ export async function createNote(note: NewNote): Promise<MapItem> {
   return res.json() as Promise<MapItem>;
 }
 
+export async function fetchIpLocation(): Promise<{
+  lat: number;
+  lng: number;
+} | null> {
+  try {
+    const res = await fetch(`${BASE}/api/v1/geo`);
+    if (!res.ok) return null;
+    const d = (await res.json()) as { lat?: number; lng?: number };
+    if (typeof d.lat === "number" && typeof d.lng === "number") {
+      return { lat: d.lat, lng: d.lng };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export async function fetchPins(): Promise<MapItem[]> {
   const token = getToken();
   const res = await fetch(`${BASE}/api/v1/map/pins`, {

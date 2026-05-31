@@ -5,6 +5,7 @@ import type { Knex } from "knex";
 import { registerAuthRoutes } from "./routes/auth.js";
 import { registerBoardRoutes } from "./routes/boards.js";
 import { registerMapRoutes } from "./routes/map.js";
+import { registerGeoRoutes } from "./routes/geo.js";
 import { registerAuthDecorator } from "./auth/jwt.js";
 
 export interface BuildServerOptions {
@@ -34,6 +35,7 @@ export function buildServer({
     registerAuthRoutes(instance, knex);
     registerBoardRoutes(instance, knex);
     registerMapRoutes(instance, knex);
+    registerGeoRoutes(instance);
   });
 
   return app;
