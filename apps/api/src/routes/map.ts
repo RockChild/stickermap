@@ -1,6 +1,6 @@
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { Knex } from "knex";
-import type { Visibility } from "@stickerboard/shared";
+import type { NoteCategory, Visibility } from "@stickerboard/shared";
 import { optionalUserId } from "../auth/jwt.js";
 import {
   createNote,
@@ -11,6 +11,7 @@ import {
 } from "../map/service.js";
 
 const VISIBILITIES: Visibility[] = ["public", "private", "unlisted"];
+const CATEGORIES: NoteCategory[] = ["help", "meet", "whatif", "cry"];
 // Free single-note TTLs (seconds): 1h, 12h, 24h. Free hard cap = 1 day.
 // Premium (up to 1 year) and permanent are gated until billing exists.
 // See 10_reactions_lifetimes_clustering.md for the full tier policy.
@@ -33,6 +34,7 @@ function parseNote(body: unknown): CreateNoteInput | null {
     lng,
     ttlSeconds,
     visibility,
+    category,
   } = body as Record<string, unknown>;
 
   if (typeof title !== "string" || title.trim().length === 0) return null;
@@ -52,6 +54,12 @@ function parseNote(body: unknown): CreateNoteInput | null {
   ) {
     return null;
   }
+  if (
+    category !== undefined &&
+    !CATEGORIES.includes(category as NoteCategory)
+  ) {
+    return null;
+  }
 
   const input: CreateNoteInput = {
     title: title.trim(),
@@ -61,6 +69,7 @@ function parseNote(body: unknown): CreateNoteInput | null {
   };
   if (typeof text === "string") input.body = text;
   if (visibility !== undefined) input.visibility = visibility as Visibility;
+  if (category !== undefined) input.category = category as NoteCategory;
   return input;
 }
 

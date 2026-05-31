@@ -1,4 +1,4 @@
-import type { MapItem, Visibility } from "@stickerboard/shared";
+import type { MapItem, NoteCategory, Visibility } from "@stickerboard/shared";
 import type { Knex } from "knex";
 import { insertBoard } from "../models/board.js";
 import {
@@ -32,6 +32,7 @@ export interface CreateNoteInput {
   /** Seconds until expiry; null requests a permanent (premium) note. */
   ttlSeconds: number | null;
   visibility?: Visibility;
+  category?: NoteCategory;
 }
 
 function toMapItem(row: MapItemRow): MapItem {
@@ -48,6 +49,7 @@ function toMapItem(row: MapItemRow): MapItem {
     reactions: row.reactions,
     reacted: row.reacted,
   };
+  if (row.category !== null) item.category = row.category;
   if (row.body !== null) item.body = row.body;
   return item;
 }
@@ -85,6 +87,7 @@ export async function createNote(
     body: input.body ?? null,
     visibility,
     kind: "note",
+    category: input.category ?? null,
     is_published: true,
     expires_at: expiresAt,
   });
@@ -100,6 +103,7 @@ export async function createNote(
     pin_id: pin.id,
     board_id: board.id,
     kind: "note",
+    category: board.category,
     title: board.title,
     body: board.body,
     visibility,

@@ -1,4 +1,4 @@
-import type { BoardKind, Visibility } from "@stickerboard/shared";
+import type { BoardKind, NoteCategory, Visibility } from "@stickerboard/shared";
 import type { Knex } from "knex";
 
 export interface InsertMapPin {
@@ -32,6 +32,7 @@ export interface MapItemRow {
   pin_id: string;
   board_id: string;
   kind: BoardKind;
+  category: NoteCategory | null;
   title: string;
   body: string | null;
   visibility: Visibility;
@@ -63,6 +64,7 @@ export async function listMapItems(
       "p.id as pin_id",
       "b.id as board_id",
       "b.kind",
+      "b.category",
       "b.title",
       "b.body",
       "b.visibility",

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import type { NoteCategory } from "@stickerboard/shared";
 import { createNote } from "../api/client.js";
+import { categoryMeta } from "./categories.js";
 
 // Free single-note ETAs, capped at 1 day (see lifetime tiers in docs).
 const TTLS = [
@@ -11,11 +13,19 @@ const TTLS = [
 interface Props {
   lat: number;
   lng: number;
-  onClose: () => void;
+  category: NoteCategory;
+  onBack: () => void;
   onCreated: () => void;
 }
 
-export function NoteComposer({ lat, lng, onClose, onCreated }: Props) {
+export function StickerComposer({
+  lat,
+  lng,
+  category,
+  onBack,
+  onCreated,
+}: Props) {
+  const meta = categoryMeta(category);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [ttl, setTtl] = useState(86400);
@@ -33,15 +43,16 @@ export function NoteComposer({ lat, lng, onClose, onCreated }: Props) {
         lat,
         lng,
         ttlSeconds: ttl,
+        category,
       });
       onCreated();
     } catch (e) {
       const code = (e as Error).message;
       setErr(
         code === "unauthorized"
-          ? "Sign in first (top-right) to drop a note."
+          ? "Sign in first (top-right) to drop a sticker."
           : code === "premium_required"
-            ? "Permanent notes are a premium feature."
+            ? "Permanent stickers are a premium feature."
             : `Could not save: ${code}`,
       );
     } finally {
@@ -52,27 +63,35 @@ export function NoteComposer({ lat, lng, onClose, onCreated }: Props) {
   return (
     <div className="composer">
       <div className="composer__head">
-        New note
-        <button className="composer__x" onClick={onClose} aria-label="Close">
+        {meta.emoji} {meta.label}
+        <button className="composer__x" onClick={onBack} aria-label="Back">
           ✕
         </button>
       </div>
-      <div className="composer__loc">
-        📍 {lat.toFixed(4)}, {lng.toFixed(4)}
+
+      <div className={`sticker-edit sticker-edit--${category}`}>
+        <span className="tape" />
+        <textarea
+          className="sticker-edit__text"
+          placeholder="Write your sticker…"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={140}
+          autoFocus
+        />
       </div>
+
       <input
         className="field"
-        placeholder="Coffee meet?"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        autoFocus
-      />
-      <textarea
-        className="field composer__body"
-        placeholder="Nero Cafe at the corner of 12 ave & 50 street"
+        placeholder="Add a detail (optional) — e.g. Nero Cafe, 12th & 50th"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
+
+      <div className="composer__loc">
+        📍 {lat.toFixed(4)}, {lng.toFixed(4)}
+      </div>
+
       <div className="composer__ttl">
         <span className="composer__ttl-label">Expires in</span>
         {TTLS.map((o) => (
@@ -88,17 +107,19 @@ export function NoteComposer({ lat, lng, onClose, onCreated }: Props) {
           Never 🔒
         </button>
       </div>
+
       {err && <div className="composer__err">{err}</div>}
+
       <div className="composer__actions">
-        <button className="btn btn-ghost" onClick={onClose}>
-          Cancel
+        <button className="btn btn-ghost" onClick={onBack}>
+          Back
         </button>
         <button
           className="btn btn-primary"
           disabled={busy || !title.trim()}
           onClick={save}
         >
-          Drop note
+          Drop sticker
         </button>
       </div>
     </div>

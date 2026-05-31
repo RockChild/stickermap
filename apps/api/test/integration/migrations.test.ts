@@ -32,6 +32,7 @@ describe("migrations (integration)", () => {
       "005_board_share_token",
       "006_notes_ttl",
       "007_reactions",
+      "008_note_category",
     ]);
   });
 

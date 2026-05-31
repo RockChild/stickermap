@@ -27,7 +27,8 @@
       "Bash(start \"\" \"http://localhost:5173/\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
       "Bash(curl -s http://localhost:3000/api/v1/map/pins)",
-      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const i=JSON.parse\\(d\\).items[0];console.log\\('sample item keys:', Object.keys\\(i\\).join\\(','\\)\\);console.log\\('reactions field present:', 'reactions' in i\\)}\\)\")"
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const i=JSON.parse\\(d\\).items[0];console.log\\('sample item keys:', Object.keys\\(i\\).join\\(','\\)\\);console.log\\('reactions field present:', 'reactions' in i\\)}\\)\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\).on\\('end',\\(\\)=>{const items=JSON.parse\\(d\\).items;const withCat=items.filter\\(i=>i.category\\);console.log\\('total:',items.length,'| with category:',withCat.length\\);if\\(withCat[0]\\)console.log\\('sample:',withCat[0].category,'-',withCat[0].title\\)}\\)\")"
     ]
   }
 }

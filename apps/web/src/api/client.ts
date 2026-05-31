@@ -1,4 +1,4 @@
-import type { MapItem } from "@stickerboard/shared";
+import type { MapItem, NoteCategory } from "@stickerboard/shared";
 
 // Local dev API. (Hardcoded to keep import.meta.env typing simple for now.)
 const BASE = "http://localhost:3000";
@@ -60,6 +60,7 @@ export interface NewNote {
   lat: number;
   lng: number;
   ttlSeconds: number | null;
+  category?: NoteCategory;
 }
 
 export async function createNote(note: NewNote): Promise<MapItem> {

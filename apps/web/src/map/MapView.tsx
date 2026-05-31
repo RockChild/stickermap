@@ -2,9 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Supercluster from "supercluster";
-import type { MapItem } from "@stickerboard/shared";
+import type { MapItem, NoteCategory } from "@stickerboard/shared";
 import { useMapPins } from "./useMapPins.js";
-import { NoteComposer } from "./NoteComposer.js";
+import { CategoryPicker } from "./CategoryPicker.js";
+import { StickerComposer } from "./StickerComposer.js";
 import { useAuth } from "../auth/AuthProvider.js";
 import { toggleReaction } from "../api/client.js";
 import { CLUSTER_OPTIONS, toFeatures, type ItemProps } from "./clusterModel.js";
@@ -32,6 +33,7 @@ export function MapView() {
   const [selected, setSelected] = useState<MapItem | null>(null);
   const [clusterList, setClusterList] = useState<MapItem[] | null>(null);
   const [reactErr, setReactErr] = useState<string | null>(null);
+  const [category, setCategory] = useState<NoteCategory | null>(null);
 
   function flyTo(item: MapItem) {
     mapRef.current?.flyTo({
@@ -95,6 +97,9 @@ export function MapView() {
       } else {
         const item = (props as ItemProps).item;
         el.className = "map-pin-dot";
+        el.style.background = item.category
+          ? `var(--cat-${item.category})`
+          : "var(--accent)";
         el.title = item.title;
         el.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -125,10 +130,11 @@ export function MapView() {
       renderMarkers();
     });
     map.on("moveend", renderMarkers);
-    // A click on empty map (not on a marker) starts a new note.
-    map.on("click", (e) =>
-      setPending({ lng: e.lngLat.lng, lat: e.lngLat.lat }),
-    );
+    // A click on empty map (not on a marker) starts a new sticker.
+    map.on("click", (e) => {
+      setCategory(null);
+      setPending({ lng: e.lngLat.lng, lat: e.lngLat.lat });
+    });
     mapRef.current = map;
     return () => {
       map.remove();
@@ -204,10 +210,15 @@ export function MapView() {
             </button>
           </div>
           <div className="detail">
-            <div className="detail__title">{selected.title}</div>
-            {selected.body && (
-              <div className="detail__body">{selected.body}</div>
-            )}
+            <div
+              className={`detail-sticker detail-sticker--${selected.category ?? "meet"}`}
+            >
+              <span className="tape" />
+              <div className="detail-sticker__text">{selected.title}</div>
+              {selected.body && (
+                <div className="detail-sticker__sub">{selected.body}</div>
+              )}
+            </div>
             <div className="detail__meta">
               {expiryLabel(selected.expiresAt)}
             </div>
@@ -226,13 +237,25 @@ export function MapView() {
         </div>
       )}
 
-      {pending && (
-        <NoteComposer
+      {pending && !category && (
+        <CategoryPicker
+          onPick={setCategory}
+          onClose={() => {
+            setPending(null);
+            setCategory(null);
+          }}
+        />
+      )}
+
+      {pending && category && (
+        <StickerComposer
           lat={pending.lat}
           lng={pending.lng}
-          onClose={() => setPending(null)}
+          category={category}
+          onBack={() => setCategory(null)}
           onCreated={() => {
             setPending(null);
+            setCategory(null);
             void refresh();
           }}
         />

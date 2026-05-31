@@ -1,4 +1,9 @@
-import type { BoardKind, Place, Visibility } from "@stickerboard/shared";
+import type {
+  BoardKind,
+  NoteCategory,
+  Place,
+  Visibility,
+} from "@stickerboard/shared";
 import type { Knex } from "knex";
 
 /** Raw `boards` row as stored in Postgres (snake_case). */
@@ -15,6 +20,7 @@ export interface BoardRow {
   premium_features: { crayonEnabled: boolean; collabEnabled: boolean };
   share_token: string | null;
   kind: BoardKind;
+  category: NoteCategory | null;
   body: string | null;
   expires_at: Date | string | null;
   created_at: string;
@@ -29,6 +35,7 @@ export interface InsertBoard {
   location?: Place | null;
   share_token?: string | null;
   kind?: BoardKind;
+  category?: NoteCategory | null;
   body?: string | null;
   expires_at?: Date | string | null;
   is_published?: boolean;
@@ -47,6 +54,7 @@ export async function insertBoard(
       location: data.location ?? null,
       share_token: data.share_token ?? null,
       kind: data.kind ?? "board",
+      category: data.category ?? null,
       body: data.body ?? null,
       expires_at: data.expires_at ?? null,
       is_published: data.is_published ?? false,

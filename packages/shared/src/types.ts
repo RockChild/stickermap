@@ -6,6 +6,7 @@ export type Visibility = "public" | "private" | "unlisted";
 export type Role = "owner" | "editor" | "viewer";
 export type StickerType = "note" | "image" | "emoji" | "shape";
 export type BoardKind = "note" | "board";
+export type NoteCategory = "help" | "meet" | "whatif" | "cry";
 
 export interface Coordinate {
   lat: number;
@@ -72,6 +73,7 @@ export interface MapItem {
   id: string;
   boardId: string;
   kind: BoardKind;
+  category?: NoteCategory;
   title: string;
   body?: string;
   lat: number;

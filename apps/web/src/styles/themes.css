@@ -28,6 +28,10 @@
   --font-head: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
   --font-hand: "Bradley Hand", "Segoe Print", cursive;
+  --cat-help: #e6b3a3;
+  --cat-meet: #cfe0c8;
+  --cat-whatif: #f0dca8;
+  --cat-cry: #b9cdde;
 }
 
 :root[data-theme="confetti"] {
@@ -51,6 +55,10 @@
   --font-head: "Baloo 2", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
   --font-body: "Nunito", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
   --font-hand: "Segoe Print", "Comic Sans MS", cursive;
+  --cat-help: #ffb3c1;
+  --cat-meet: #b8f2e6;
+  --cat-whatif: #fff1a8;
+  --cat-cry: #bcd3ff;
 }
 
 :root[data-theme="midnight"] {
@@ -74,4 +82,8 @@
   --font-head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
   --font-hand: "Segoe Print", cursive;
+  --cat-help: #4a2030;
+  --cat-meet: #103436;
+  --cat-whatif: #34301a;
+  --cat-cry: #1a2945;
 }
