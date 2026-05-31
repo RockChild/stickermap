@@ -1,7 +1,4 @@
-import {
-  createKnex,
-  DEFAULT_DATABASE_URL,
-} from "../src/db/connection.js";
+import { createKnex, DEFAULT_DATABASE_URL } from "../src/db/connection.js";
 import { migrateLatest } from "../src/db/migrate.js";
 
 const url = process.env.DATABASE_URL ?? DEFAULT_DATABASE_URL;

@@ -13,7 +13,14 @@
       "Bash(rm .git/COMMIT_EDITMSG_FIX)",
       "Bash(docker --version)",
       "Bash(docker info *)",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)",
+      "Bash(npx prettier *)"
     ]
   }
 }

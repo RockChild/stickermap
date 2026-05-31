@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: stickerboard
+          POSTGRES_PASSWORD: stickerboard
+          POSTGRES_DB: stickerboard
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U stickerboard"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      CI: "true"
+      TEST_DATABASE_URL: postgres://stickerboard:stickerboard@localhost:5432/stickerboard_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The local compose init.sql doesn't run for the CI service container,
+      # so create the isolated test database explicitly.
+      - name: Create test database
+        env:
+          PGPASSWORD: stickerboard
+        run: psql -h localhost -U stickerboard -d stickerboard -c 'CREATE DATABASE stickerboard_test;'
+
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run test:integration
+
+    # NOTE: E2E (Playwright) and Docker image build stages are intentionally
+    # deferred until apps/web exists (Sprint 1).

@@ -40,7 +40,11 @@ export async function login(
   const user = await findByEmail(knex, email);
   // Same error for unknown email and wrong password to avoid user enumeration.
   if (!user || !(await verifyPassword(password, user.password_hash))) {
-    throw new AuthError(401, "invalid_credentials", "Invalid email or password");
+    throw new AuthError(
+      401,
+      "invalid_credentials",
+      "Invalid email or password",
+    );
   }
   return { id: user.id, email: user.email };
 }

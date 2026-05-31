@@ -42,8 +42,7 @@ export function reduceLocation(
 ): ReducedLocation {
   const resolved = geocoder(coord);
 
-  const place =
-    options.type === "city" ? resolved.city : resolved.country;
+  const place = options.type === "city" ? resolved.city : resolved.country;
 
   if (!place) {
     throw new Error(

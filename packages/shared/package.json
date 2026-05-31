@@ -9,6 +9,6 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc -b --pretty false"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   }
 }

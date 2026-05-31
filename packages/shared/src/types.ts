@@ -41,7 +41,11 @@ export interface Sticker {
   type: StickerType;
   content: string;
   position: { x: number; y: number };
-  style: { color: string; rotation: number; size: "small" | "medium" | "large" };
+  style: {
+    color: string;
+    rotation: number;
+    size: "small" | "medium" | "large";
+  };
   createdBy: string;
   createdAt: string;
 }
