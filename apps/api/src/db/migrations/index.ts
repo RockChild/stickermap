@@ -7,6 +7,7 @@ import * as m005 from "./005_board_share_token.js";
 import * as m006 from "./006_notes_ttl.js";
 import * as m007 from "./007_reactions.js";
 import * as m008 from "./008_note_category.js";
+import * as m009 from "./009_usernames.js";
 
 interface MigrationModule {
   up: (knex: Knex) => Promise<void>;
@@ -28,6 +29,7 @@ const migrations: NamedMigration[] = [
   { name: "006_notes_ttl", mod: m006 },
   { name: "007_reactions", mod: m007 },
   { name: "008_note_category", mod: m008 },
+  { name: "009_usernames", mod: m009 },
 ];
 
 /**

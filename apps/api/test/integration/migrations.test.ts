@@ -33,6 +33,7 @@ describe("migrations (integration)", () => {
       "006_notes_ttl",
       "007_reactions",
       "008_note_category",
+      "009_usernames",
     ]);
   });
 

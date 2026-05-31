@@ -26,6 +26,7 @@ export function setToken(token: string | null): void {
 export interface AuthUser {
   id: string;
   email: string;
+  username: string;
 }
 interface AuthResult {
   user: AuthUser;
@@ -39,22 +40,28 @@ async function errorCode(res: Response): Promise<string> {
 
 async function authRequest(
   path: "signup" | "login",
-  email: string,
-  password: string,
+  body: Record<string, string>,
 ): Promise<AuthResult> {
   const res = await fetch(`${BASE}/api/v1/auth/${path}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(await errorCode(res));
   return res.json() as Promise<AuthResult>;
 }
 
-export const signupRequest = (e: string, p: string) =>
-  authRequest("signup", e, p);
-export const loginRequest = (e: string, p: string) =>
-  authRequest("login", e, p);
+export const signupRequest = (
+  email: string,
+  password: string,
+  username?: string,
+) =>
+  authRequest(
+    "signup",
+    username ? { email, password, username } : { email, password },
+  );
+export const loginRequest = (email: string, password: string) =>
+  authRequest("login", { email, password });
 
 export interface NewNote {
   title: string;

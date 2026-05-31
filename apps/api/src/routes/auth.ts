@@ -5,17 +5,29 @@ import { AuthError, login, signup, type PublicUser } from "../auth/service.js";
 interface AuthBody {
   email?: unknown;
   password?: unknown;
+  username?: unknown;
 }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
-function parseCredentials(
-  body: AuthBody,
-): { email: string; password: string } | null {
-  const { email, password } = body ?? {};
+interface Credentials {
+  email: string;
+  password: string;
+  username?: string;
+}
+
+function parseCredentials(body: AuthBody): Credentials | null {
+  const { email, password, username } = body ?? {};
   if (typeof email !== "string" || !EMAIL_RE.test(email)) return null;
   if (typeof password !== "string" || password.length < 8) return null;
-  return { email, password };
+  // username is optional here; the service validates/normalizes it (or
+  // generates one). Reject only an explicitly wrong type.
+  if (username !== undefined && typeof username !== "string") return null;
+  const creds: Credentials = { email, password };
+  if (typeof username === "string" && username.trim() !== "") {
+    creds.username = username;
+  }
+  return creds;
 }
 
 async function issueToken(
@@ -38,7 +50,12 @@ export function registerAuthRoutes(app: FastifyInstance, knex: Knex): void {
     const creds = parseCredentials(req.body as AuthBody);
     if (!creds) return reply.code(400).send({ error: "invalid_input" });
     try {
-      const user = await signup(knex, creds.email, creds.password);
+      const user = await signup(
+        knex,
+        creds.email,
+        creds.password,
+        creds.username,
+      );
       const token = await issueToken(reply, user);
       return reply.code(201).send({ user, token });
     } catch (error) {

@@ -4,6 +4,7 @@ import { useAuth } from "./AuthProvider.js";
 export function AuthBar() {
   const { isAuthed, user, login, signup, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -12,7 +13,9 @@ export function AuthBar() {
   if (isAuthed) {
     return (
       <div className="authbar">
-        <span className="authbar__who">{user ? user.email : "Signed in"}</span>
+        <span className="authbar__who">
+          {user ? `@${user.username}` : "Signed in"}
+        </span>
         <button className="btn btn-ghost btn-sm" onClick={logout}>
           Sign out
         </button>
@@ -20,11 +23,11 @@ export function AuthBar() {
     );
   }
 
-  async function run(fn: (e: string, p: string) => Promise<void>) {
+  async function guard(action: () => Promise<void>) {
     setBusy(true);
     setErr(null);
     try {
-      await fn(email, password);
+      await action();
       setOpen(false);
     } catch (e) {
       setErr((e as Error).message);
@@ -62,18 +65,27 @@ export function AuthBar() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <input
+              className="field"
+              placeholder="username (optional, for sign up)"
+              autoComplete="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <div className="authbar__actions">
               <button
                 className="btn btn-ghost btn-sm"
                 disabled={busy}
-                onClick={() => run(login)}
+                onClick={() => guard(() => login(email, password))}
               >
                 Sign in
               </button>
               <button
                 className="btn btn-primary btn-sm"
                 disabled={busy}
-                onClick={() => run(signup)}
+                onClick={() =>
+                  guard(() => signup(email, password, username || undefined))
+                }
               >
                 Sign up
               </button>

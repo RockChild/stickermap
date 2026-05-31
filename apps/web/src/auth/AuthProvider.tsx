@@ -16,7 +16,7 @@ import {
 interface AuthValue {
   user: AuthUser | null;
   isAuthed: boolean;
-  signup: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, username?: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -33,8 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       user,
       isAuthed: user !== null || hasToken,
-      signup: async (email, password) => {
-        const r = await signupRequest(email, password);
+      signup: async (email, password, username) => {
+        const r = await signupRequest(email, password, username);
         setToken(r.token);
         setUser(r.user);
         setHasToken(true);
