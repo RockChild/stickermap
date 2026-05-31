@@ -10,7 +10,10 @@
       "Bash(git config *)",
       "Bash(cat)",
       "Bash(git commit *)",
-      "Bash(rm .git/COMMIT_EDITMSG_FIX)"
+      "Bash(rm .git/COMMIT_EDITMSG_FIX)",
+      "Bash(docker --version)",
+      "Bash(docker info *)",
+      "Bash(docker compose *)"
     ]
   }
 }

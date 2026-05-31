@@ -16,8 +16,15 @@ Requirements: Node >= 22, Docker.
 ```bash
 npm install                 # install workspace deps
 cp .env.example .env        # then edit secrets
-docker compose up -d        # Postgres+PostGIS, Redis, MinIO  (added in step 2)
+./scripts/bootstrap.sh      # docker compose up + run migrations (main + test DBs)
 npm test                    # run all Vitest suites
+```
+
+Or step the stack up manually:
+
+```bash
+docker compose up -d                              # Postgres+PostGIS, Redis, MinIO
+npm --workspace @stickerboard/api run migrate     # apply migrations to the main DB
 ```
 
 **Testing strategy** — Vitest for unit + integration (fast, terse output), Playwright for E2E only.
