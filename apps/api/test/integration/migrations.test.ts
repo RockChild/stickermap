@@ -29,6 +29,7 @@ describe("migrations (integration)", () => {
       "002_users",
       "003_boards_stickers",
       "004_map_pins",
+      "005_board_share_token",
     ]);
   });
 

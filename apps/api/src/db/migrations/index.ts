@@ -3,6 +3,7 @@ import * as m001 from "./001_enable_postgis.js";
 import * as m002 from "./002_users.js";
 import * as m003 from "./003_boards_stickers.js";
 import * as m004 from "./004_map_pins.js";
+import * as m005 from "./005_board_share_token.js";
 
 interface MigrationModule {
   up: (knex: Knex) => Promise<void>;
@@ -20,6 +21,7 @@ const migrations: NamedMigration[] = [
   { name: "002_users", mod: m002 },
   { name: "003_boards_stickers", mod: m003 },
   { name: "004_map_pins", mod: m004 },
+  { name: "005_board_share_token", mod: m005 },
 ];
 
 /**

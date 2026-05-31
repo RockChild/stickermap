@@ -17,7 +17,11 @@ export default defineWorkspace([
       name: "integration",
       include: ["apps/**/test/integration/**/*.test.ts"],
       // Integration tests touch Postgres/Redis; run serially with headroom.
+      // A single fork keeps schema-destructive setup (e.g. the migrations
+      // suite's DROP SCHEMA) from racing another file's live connections.
       fileParallelism: false,
+      pool: "forks",
+      poolOptions: { forks: { singleFork: true } },
       testTimeout: 30_000,
     },
   },
