@@ -1,7 +1,9 @@
 import type { MapItem, NoteCategory } from "@stickerboard/shared";
 
-// Local dev API. (Hardcoded to keep import.meta.env typing simple for now.)
-const BASE = "http://localhost:3000";
+// Same-origin: the Vite dev server proxies /api to the local API
+// (see vite.config.ts), so this works on localhost and across the LAN with no
+// hardcoded machine IP.
+const BASE = "";
 const TOKEN_KEY = "stickerboard:token";
 
 export function getToken(): string | null {
