@@ -1,10 +1,12 @@
 import type { FastifyInstance, FastifyReply } from "fastify";
 import type { Knex } from "knex";
 import type { Visibility } from "@stickerboard/shared";
+import { optionalUserId } from "../auth/jwt.js";
 import {
   createNote,
   listMap,
   MapError,
+  toggleReaction,
   type CreateNoteInput,
 } from "../map/service.js";
 
@@ -83,13 +85,28 @@ export function registerMapRoutes(app: FastifyInstance, knex: Knex): void {
     },
   );
 
-  // Public map feed (anonymous allowed).
-  app.get("/api/v1/map/pins", async (_req, reply) => {
+  // Public map feed (anonymous allowed; reaction state reflects the viewer).
+  app.get("/api/v1/map/pins", async (req, reply) => {
     try {
-      const items = await listMap(knex);
+      const viewerId = await optionalUserId(req);
+      const items = await listMap(knex, viewerId);
       return reply.code(200).send({ items });
     } catch (error) {
       return handleError(error, reply);
     }
   });
+
+  // Toggle the caller's +1 on a board (authenticated).
+  app.post<{ Params: { id: string } }>(
+    "/api/v1/boards/:id/reactions",
+    { preHandler: app.authenticate },
+    async (req, reply) => {
+      try {
+        const result = await toggleReaction(knex, req.params.id, req.user.sub);
+        return reply.code(200).send(result);
+      } catch (error) {
+        return handleError(error, reply);
+      }
+    },
+  );
 }

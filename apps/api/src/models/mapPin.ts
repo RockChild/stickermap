@@ -38,14 +38,20 @@ export interface MapItemRow {
   expires_at: Date | string | null;
   lat: number;
   lng: number;
+  reactions: number;
+  reacted: boolean;
 }
 
 /**
  * Lists everything currently visible on the public map: published, public, and
- * not expired. Joins each pin to its board for title/body/kind/expiry, and
- * projects the centroid back to lat/lng.
+ * not expired. Joins each pin to its board for title/body/kind/expiry, projects
+ * the centroid back to lat/lng, and includes the +1 count (and whether the
+ * given viewer has reacted).
  */
-export async function listMapItems(knex: Knex): Promise<MapItemRow[]> {
+export async function listMapItems(
+  knex: Knex,
+  viewerId: string | null,
+): Promise<MapItemRow[]> {
   return knex("map_pins as p")
     .join("boards as b", "b.id", "p.board_id")
     .where("b.is_published", true)
@@ -63,6 +69,13 @@ export async function listMapItems(knex: Knex): Promise<MapItemRow[]> {
       "b.expires_at",
       knex.raw("ST_Y(p.centroid)::float8 as lat"),
       knex.raw("ST_X(p.centroid)::float8 as lng"),
+      knex.raw(
+        "(SELECT count(*)::int FROM reactions r WHERE r.board_id = b.id) as reactions",
+      ),
+      knex.raw(
+        "EXISTS(SELECT 1 FROM reactions r WHERE r.board_id = b.id AND r.user_id = ?) as reacted",
+        [viewerId],
+      ),
     )
     .orderBy("b.created_at", "desc");
 }

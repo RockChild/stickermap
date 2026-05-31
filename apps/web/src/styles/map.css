@@ -278,3 +278,48 @@
   font-size: 12px;
   color: var(--muted);
 }
+.detail__react {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.react-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid var(--line);
+  background: var(--bg-2);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition:
+    transform 0.12s var(--ease-bounce),
+    background 0.2s;
+}
+.react-btn:active {
+  transform: scale(0.95);
+}
+.react-btn--on {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+.detail__react-err {
+  font-size: 12px;
+  color: var(--muted);
+}
+.panel-list__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.panel-list__count {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}

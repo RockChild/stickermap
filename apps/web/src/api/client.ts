@@ -77,8 +77,27 @@ export async function createNote(note: NewNote): Promise<MapItem> {
 }
 
 export async function fetchPins(): Promise<MapItem[]> {
-  const res = await fetch(`${BASE}/api/v1/map/pins`);
+  const token = getToken();
+  const res = await fetch(`${BASE}/api/v1/map/pins`, {
+    headers: token ? { authorization: `Bearer ${token}` } : {},
+  });
   if (!res.ok) throw new Error(await errorCode(res));
   const data = (await res.json()) as { items: MapItem[] };
   return data.items;
+}
+
+export interface ReactionResult {
+  reactions: number;
+  reacted: boolean;
+}
+
+/** Toggle the current user's +1 on a board. Requires auth. */
+export async function toggleReaction(boardId: string): Promise<ReactionResult> {
+  const token = getToken();
+  const res = await fetch(`${BASE}/api/v1/boards/${boardId}/reactions`, {
+    method: "POST",
+    headers: token ? { authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) throw new Error(await errorCode(res));
+  return res.json() as Promise<ReactionResult>;
 }

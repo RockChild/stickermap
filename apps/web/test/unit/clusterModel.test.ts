@@ -16,6 +16,7 @@ const item: MapItem = {
   lng: -73.9851,
   visibility: "public",
   expiresAt: "2026-06-01T00:00:00.000Z",
+  reactions: 0,
 };
 
 describe("clusterModel", () => {

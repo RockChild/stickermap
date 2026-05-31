@@ -6,6 +6,11 @@ import {
   listMapItems,
   type MapItemRow,
 } from "../models/mapPin.js";
+import {
+  countReactions,
+  toggleReaction as toggleReactionRow,
+} from "../models/reaction.js";
+import { getBoardForReader } from "../boards/service.js";
 
 /** Domain error for map/note operations (mirrors BoardError/AuthError). */
 export class MapError extends Error {
@@ -40,6 +45,8 @@ function toMapItem(row: MapItemRow): MapItem {
     visibility: row.visibility,
     expiresAt:
       row.expires_at === null ? null : new Date(row.expires_at).toISOString(),
+    reactions: row.reactions,
+    reacted: row.reacted,
   };
   if (row.body !== null) item.body = row.body;
   return item;
@@ -99,10 +106,39 @@ export async function createNote(
     expires_at: expiresAt,
     lat: input.lat,
     lng: input.lng,
+    reactions: 0,
+    reacted: false,
   });
 }
 
-export async function listMap(knex: Knex): Promise<MapItem[]> {
-  const rows = await listMapItems(knex);
+export async function listMap(
+  knex: Knex,
+  viewerId: string | null,
+): Promise<MapItem[]> {
+  const rows = await listMapItems(knex, viewerId);
   return rows.map(toMapItem);
+}
+
+export interface ReactionResult {
+  reactions: number;
+  reacted: boolean;
+}
+
+/** Toggles the viewer's +1 on a board they can see. */
+export async function toggleReaction(
+  knex: Knex,
+  boardId: string,
+  userId: string,
+): Promise<ReactionResult> {
+  // Must be able to see the board to react (404 otherwise — no leak).
+  const board = await getBoardForReader(knex, boardId, {
+    userId,
+    shareToken: null,
+  });
+  if (!board) {
+    throw new MapError(404, "board_not_found", "Board not found");
+  }
+  const reacted = await toggleReactionRow(knex, boardId, userId);
+  const reactions = await countReactions(knex, boardId);
+  return { reactions, reacted };
 }

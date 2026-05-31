@@ -6,6 +6,7 @@ import type { MapItem } from "@stickerboard/shared";
 import { useMapPins } from "./useMapPins.js";
 import { NoteComposer } from "./NoteComposer.js";
 import { useAuth } from "../auth/AuthProvider.js";
+import { toggleReaction } from "../api/client.js";
 import { CLUSTER_OPTIONS, toFeatures, type ItemProps } from "./clusterModel.js";
 
 // Keyless demo style — no API token needed.
@@ -30,12 +31,32 @@ export function MapView() {
   );
   const [selected, setSelected] = useState<MapItem | null>(null);
   const [clusterList, setClusterList] = useState<MapItem[] | null>(null);
+  const [reactErr, setReactErr] = useState<string | null>(null);
 
   function flyTo(item: MapItem) {
     mapRef.current?.flyTo({
       center: [item.lng, item.lat],
       zoom: Math.max(mapRef.current.getZoom(), 14),
     });
+  }
+
+  async function react(item: MapItem) {
+    if (!isAuthed) {
+      setReactErr("Sign in (top-right) to +1.");
+      return;
+    }
+    setReactErr(null);
+    try {
+      const r = await toggleReaction(item.boardId);
+      setSelected((s) =>
+        s && s.id === item.id
+          ? { ...s, reactions: r.reactions, reacted: r.reacted }
+          : s,
+      );
+      void refresh();
+    } catch (e) {
+      setReactErr((e as Error).message);
+    }
   }
 
   // Re-render markers for the current viewport from the cluster index.
@@ -78,6 +99,7 @@ export function MapView() {
         el.addEventListener("click", (e) => {
           e.stopPropagation();
           setClusterList(null);
+          setReactErr(null);
           setSelected(item);
         });
       }
@@ -158,7 +180,10 @@ export function MapView() {
                   flyTo(it);
                 }}
               >
-                <div className="panel-list__title">{it.title}</div>
+                <div className="panel-list__row">
+                  <span className="panel-list__title">{it.title}</span>
+                  <span className="panel-list__count">👍 {it.reactions}</span>
+                </div>
                 {it.body && <div className="panel-list__sub">{it.body}</div>}
               </button>
             ))}
@@ -185,6 +210,17 @@ export function MapView() {
             )}
             <div className="detail__meta">
               {expiryLabel(selected.expiresAt)}
+            </div>
+            <div className="detail__react">
+              <button
+                className={`react-btn ${selected.reacted ? "react-btn--on" : ""}`}
+                onClick={() => react(selected)}
+              >
+                👍 <span>{selected.reactions}</span>
+              </button>
+              {reactErr && (
+                <span className="detail__react-err">{reactErr}</span>
+              )}
             </div>
           </div>
         </div>

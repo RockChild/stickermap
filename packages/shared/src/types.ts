@@ -79,4 +79,8 @@ export interface MapItem {
   visibility: Visibility;
   /** ISO timestamp when it disappears; null = permanent (premium). */
   expiresAt: string | null;
+  /** Public +1 count. */
+  reactions: number;
+  /** Whether the requesting user has +1'd it (false for anonymous). */
+  reacted?: boolean;
 }
